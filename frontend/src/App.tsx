@@ -1,14 +1,15 @@
 import React from "react";
 import "./App.css";
-import MovieList from "./components/MovieList";
 import Home from "./components/Home";
 import SearchResult from "./components/SearchResult";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import NavStructure from "./components/NavStructure/NavStructure";
 
 interface IState {
     currentPage: string;
     searchTerm: string;
+    watchlater: any;
+    favourites: any;
+    tracking: any;
 }
 
 class App extends React.Component<{}, IState>{
@@ -16,7 +17,10 @@ class App extends React.Component<{}, IState>{
         super(props);
         this.state = {
             currentPage: "home",
-            searchTerm: ""
+            searchTerm: "",
+            watchlater: [],
+            favourites: [],
+            tracking: []
         };
     }
 
@@ -30,8 +34,8 @@ class App extends React.Component<{}, IState>{
         this.setState({ currentPage: page });
     }
 
-    public handleMovieSelect = () => {
-        console.log("clicked");
+    public addToFavourites = (id: any) => {
+
     }
 
 
@@ -46,7 +50,7 @@ class App extends React.Component<{}, IState>{
             return (
                 <div>
                     <NavStructure handleSearch={this.handleSearch} />
-                    <SearchResult searchTerm={this.state.searchTerm} handleMovieSelect={this.handleMovieSelect} />
+                    <SearchResult searchTerm={this.state.searchTerm} />
                 </div>
             );
         }

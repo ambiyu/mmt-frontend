@@ -1,9 +1,8 @@
 import * as React from "react";
-import Movie from "./Movie";
+import MovieCard from "./MovieCard";
 import "./stylesheet.css"
 
 interface IProps {
-    handleMovieSelect(): any;
     searchTerm: string;
 }
 
@@ -42,7 +41,7 @@ export default class SearchResult extends React.Component<IProps, IState> {
                     <header className="searchHeader">SEARCH RESULTS FOR "{this.props.searchTerm.toLocaleUpperCase()}"</header>>
                     <div className="searchResult">
                         {this.state.results.map((result: any) =>
-                            <Movie key={result.id} data={result} handleMovieSelect={this.props.handleMovieSelect} displayType={0} />
+                            <MovieCard key={result.id} data={result} displayType={0} />
                         )}
                     </div>
                 </div>
