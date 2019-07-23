@@ -1,0 +1,43 @@
+.poster :not(img) {
+    position: absolute;
+    margin: auto;
+    z-index: 1;
+    width: 200px;
+    display: flex;
+    padding-top: 133px;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    opacity: 0;
+    transition: 0.5s;
+    font-size: 20px;
+}
+
+.poster:hover :not(img) {
+    opacity: 1;
+}
+
+.poster img {
+    width: 200px;
+    height: 300px;
+}
+
+.poster:hover img {
+    opacity: 0.3;
+    cursor: pointer;
+}
+
+.searchResult {
+    position: relative;
+    display: grid;
+    padding-left: 13%;
+    grid-gap: 30px;
+    grid-template-columns: repeat(7, 200px);
+}
+
+.searchHeader {
+    padding-top: 50px;
+    padding-left: 250px;
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+}
