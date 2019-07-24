@@ -31,13 +31,13 @@ body {
     font-size: 20px;
 }
 
-.searchBar {
+.search-bar {
     width: 30%;
     position: relative;
     display: flex;
 }
 
-.searchText {
+.search-text {
     width: 100%;
     border: 3px solid #00B4CC;
     border-right: none;
@@ -48,11 +48,11 @@ body {
     color: #9DBFAF;
 }
 
-.searchText:focus {
+.search-text:focus {
     color: #00B4CC;
 }
 
-.searchButton {
+.search-button {
     width: 40px;
     height: 36px;
     border: 1px solid #00B4CC;

@@ -3,6 +3,7 @@ import MovieCard from "./MovieCard";
 import "./stylesheet.css"
 
 interface IProps {
+    updateDb(data: any, type: string, operation: string): any;
     searchTerm: string;
 }
 
@@ -41,7 +42,7 @@ export default class SearchResult extends React.Component<IProps, IState> {
                     <header className="searchHeader">SEARCH RESULTS FOR "{this.props.searchTerm.toLocaleUpperCase()}"</header>>
                     <div className="searchResult">
                         {this.state.results.map((result: any) =>
-                            <MovieCard key={result.id} data={result} displayType={0} />
+                            <MovieCard key={result.id} data={result} updateDb={this.props.updateDb} />
                         )}
                     </div>
                 </div>

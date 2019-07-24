@@ -34,10 +34,9 @@ class App extends React.Component<{}, IState>{
         this.setState({ currentPage: page });
     }
 
-    public addToFavourites = (id: any) => {
-
+    public updateDb = (data: any, type: string, operation: string) => {
+        console.log(operation + " ", data);
     }
-
 
     public render() {
         if (this.state.currentPage === "home") {
@@ -50,7 +49,7 @@ class App extends React.Component<{}, IState>{
             return (
                 <div>
                     <NavStructure handleSearch={this.handleSearch} />
-                    <SearchResult searchTerm={this.state.searchTerm} />
+                    <SearchResult searchTerm={this.state.searchTerm} updateDb={this.updateDb} />
                 </div>
             );
         }

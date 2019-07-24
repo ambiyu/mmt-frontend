@@ -2,14 +2,8 @@ import * as React from "react";
 import "./stylesheet.css";
 
 interface IProps {
+    updateDb(data: any, type: string, operation: string): any;
     data: any;
-    displayType: number; // 0 for poster only, 1 for full info listing
-    // id: string;
-    // title: string;
-    // release_date: string;
-    // poster_path: string;
-    // mediaType: string;
-    // overview: string;
 }
 
 
@@ -31,8 +25,19 @@ export default class Movie extends React.Component<IProps, {}> {
         console.log(elem);
         if (elem != null) {
             elem.classList.toggle("active");
+            const data = this.props.data;
+            const movieData = {
+                id: data.id,
+                title: this.getTitle(),
+                poster_path: data.poster_path,
+                overview: data.overview,
+                release_date: data.release_date,
+                media_type: data.media_type
+            }
             if (elem.classList.contains("active")) {
-
+                this.props.updateDb(movieData, type, "add");
+            } else {
+                this.props.updateDb(movieData, type, "delete");
             }
         }
     }
@@ -60,8 +65,6 @@ export default class Movie extends React.Component<IProps, {}> {
                         <img src={"https://image.tmdb.org/t/p/w500" + this.props.data.poster_path} alt={this.getTitle()} />
                     </a>
                 </div>
-
-
             </div>
         );
     }
