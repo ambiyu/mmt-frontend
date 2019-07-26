@@ -19,13 +19,11 @@ export default class SearchResult extends React.Component<IProps, IState> {
         }
     }
 
-    public getMoviesByTerm = (term: any) => {
+    public searchMoviesByTerm = (term: any) => {
         const APIKey = "5001541809100a7e7385e7c891e817d2";
-        fetch(
-            "https://api.themoviedb.org/3/search/multi?api_key=" + APIKey + "&query=" + term, {
-                method: "GET"
-            }
-        ).then(response => {
+        fetch("https://api.themoviedb.org/3/search/multi?api_key=" + APIKey + "&query=" + term, {
+            method: "GET"
+        }).then(response => {
             if (response.ok) {
                 response.json().then(data => {
                     this.setState({ results: data.results });
@@ -35,7 +33,7 @@ export default class SearchResult extends React.Component<IProps, IState> {
     };
 
     public render() {
-        this.getMoviesByTerm(this.props.searchTerm);
+        this.searchMoviesByTerm(this.props.searchTerm);
         if (this.state.results.length !== 0) {
             return (
                 <div>

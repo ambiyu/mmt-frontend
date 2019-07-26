@@ -35,9 +35,9 @@ export default class Movie extends React.Component<IProps, {}> {
                 media_type: data.media_type
             }
             if (elem.classList.contains("active")) {
-                this.props.updateDb(movieData, type, "add");
+                this.props.updateDb(movieData, type, "POST");
             } else {
-                this.props.updateDb(movieData, type, "delete");
+                this.props.updateDb(movieData, type, "DELETE");
             }
         }
     }
@@ -48,9 +48,8 @@ export default class Movie extends React.Component<IProps, {}> {
                 <div className="card-menu">
                     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
                     <div className="link-btns">
-                        <button id={"wl" + this.props.data.id} className="watchlater" title="Watch later" onClick={() => this.handleToggleButton("wl")} ><i className="material-icons">watch_later</i></button>
-                        <button id={"fav" + this.props.data.id} className="favourite" title="Add to favourites" onClick={() => this.handleToggleButton("fav")}><i className="material-icons">favorite_border</i></button>
-                        <button id={"track" + this.props.data.id} className="track" title="Track movie" onClick={() => this.handleToggleButton("track")}><i className="material-icons">remove_red_eye</i></button>
+                        <button id={"favourite" + this.props.data.id} className="favourite" title="Add to favourites" onClick={() => this.handleToggleButton("favourite")}><i className="material-icons">favorite_border</i></button>
+                        <button id={"tracking" + this.props.data.id} className="track" title="Track movie" onClick={() => this.handleToggleButton("tracking")}><i className="material-icons">remove_red_eye</i></button>
                     </div>
                 </div>
 
