@@ -46,7 +46,7 @@ export default class SearchResult extends React.Component<IProps, IState> {
                     <header className="searchHeader">SEARCH RESULTS FOR "{this.props.searchTerm.toLocaleUpperCase()}"</header>>
                     <div className="searchResult">
                         {this.state.results.map((result: any) =>
-                            <MovieCard key={result.id} data={result} updateDb={this.props.updateDb} />
+                            <MovieCard key={result.id} data={result} updateDb={this.props.updateDb} mediaType={result.media_type} />
                         )}
                     </div>
                 </div>

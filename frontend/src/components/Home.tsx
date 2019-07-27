@@ -53,11 +53,15 @@ export default class Home extends React.Component<IProps, IState> {
     public render() {
         if (!this.state.loading) {
             return (
-                <div className="home">
-                    <header>Home page</header>
+                <div className="homepage">
                     <div className="trending-mv">
                         {this.state.trendingMovies.map((result: any) =>
-                            <MovieCard key={result.id} data={result} updateDb={this.props.updateDb} />
+                            <MovieCard key={result.id} data={result} updateDb={this.props.updateDb} mediaType="movie" />
+                        )}
+                    </div>
+                    <div className="trending-tv">
+                        {this.state.trendingTv.map((result: any) =>
+                            <MovieCard key={result.id} data={result} updateDb={this.props.updateDb} mediaType="tv" />
                         )}
                     </div>
                 </div>
@@ -65,7 +69,7 @@ export default class Home extends React.Component<IProps, IState> {
         } else {
             return (
                 <div className="home">
-                    <header>Home page</header>
+                    <header>Loading...</header>
                 </div>
             )
         }

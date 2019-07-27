@@ -3,6 +3,7 @@ import "./stylesheet.css";
 
 interface IProps {
     updateDb(data: any, type: string, operation: string): any;
+    mediaType: string;
     data: any;
 }
 
@@ -60,7 +61,7 @@ export default class Movie extends React.Component<IProps, {}> {
                 </div>
 
                 <div className="card-poster">
-                    <a href={"https://www.themoviedb.org/" + this.props.data.media_type + "/" + this.props.data.id}>
+                    <a href={"https://www.themoviedb.org/" + this.props.mediaType + "/" + this.props.data.id}>
                         <img src={"https://image.tmdb.org/t/p/w500" + this.props.data.poster_path} alt={this.getTitle()} />
                     </a>
                 </div>
