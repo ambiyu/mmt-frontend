@@ -1,3 +1,8 @@
+body {
+    background: rgb(8, 13, 37);
+    font-family: 'Open Sans', sans-serif;
+}
+
 .card-title :not(img) {
     position: absolute;
     margin: auto;
@@ -8,9 +13,11 @@
     opacity: 0;
     transition: 0.5s;
     font-size: 20px;
+    white-space: initial;
 }
 
 .movie-card:hover :not(img) {
+    z-index: 1;
     opacity: 1;
 }
 
@@ -87,7 +94,8 @@
 .homepage {
     margin-top: 50px;
     margin-left: 200px;
-    font-size: 50px;
+    margin-right: 50px;
+    font-size: 25px;
 }
 
 .trending-tv, .trending-mv {
@@ -95,7 +103,34 @@
     display: grid;
     grid-gap: 30px;
     grid-template-columns: repeat(20, 200px);
-    width: 30em;
     overflow-x: auto;
     white-space: nowrap;
+}
+
+.trending-mv-wrap, .trending-tv-wrap {
+    color: white;
+    padding-bottom: 50px;
+}
+
+.homepage header {
+    padding-bottom: 20px;
+}
+
+#trending-mv::-webkit-scrollbar, #trending-tv::-webkit-scrollbar {
+    border-radius: 10px;
+    height: 10px;
+    width: 6px;
+    background-color: #F5F5F5;
+}
+
+#trending-mv::-webkit-scrollbar-track, #trending-tv::-webkit-scrollbar-track {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #F5F5F5;
+}
+
+#trending-mv::-webkit-scrollbar-thumb, #trending-tv::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #00A0EC;
 }

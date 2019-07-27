@@ -54,15 +54,21 @@ export default class Home extends React.Component<IProps, IState> {
         if (!this.state.loading) {
             return (
                 <div className="homepage">
-                    <div className="trending-mv">
-                        {this.state.trendingMovies.map((result: any) =>
-                            <MovieCard key={result.id} data={result} updateDb={this.props.updateDb} mediaType="movie" />
-                        )}
+                    <div className="trending-mv-wrap">
+                        <header>Trending Movies</header>
+                        <div className="trending-mv" id="trending-mv" >
+                            {this.state.trendingMovies.map((result: any) =>
+                                <MovieCard key={result.id} data={result} updateDb={this.props.updateDb} mediaType="movie" />
+                            )}
+                        </div>
                     </div>
-                    <div className="trending-tv">
-                        {this.state.trendingTv.map((result: any) =>
-                            <MovieCard key={result.id} data={result} updateDb={this.props.updateDb} mediaType="tv" />
-                        )}
+                    <div className="trending-tv-wrap">
+                        <header>Trending TV Series</header>
+                        <div className="trending-tv" id="trending-tv" >
+                            {this.state.trendingTv.map((result: any) =>
+                                <MovieCard key={result.id} data={result} updateDb={this.props.updateDb} mediaType="tv" />
+                            )}
+                        </div>
                     </div>
                 </div>
             );
