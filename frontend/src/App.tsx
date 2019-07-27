@@ -124,6 +124,7 @@ class App extends React.Component<{}, IState>{
             return (
                 <div>
                     <NavStructure handleSearch={this.handleSearch} />
+                    <Home updateDb={this.updateDb} />
                 </div>
             );
         } else if (this.state.currentPage === "search") {
