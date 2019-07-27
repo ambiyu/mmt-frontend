@@ -20,6 +20,12 @@ export default class Movie extends React.Component<IProps, {}> {
         } else return "-";
     }
 
+    private getReleaseDate = () => {
+        if (this.props.data.release_date != null) {
+            return this.props.data.release_date;
+        } else return this.props.data.first_air_date;
+    }
+
     public handleToggleButton = (type: string) => {
         var elem = document.getElementById(type + this.props.data.id);
         console.log(type);
@@ -58,6 +64,10 @@ export default class Movie extends React.Component<IProps, {}> {
                     <a href={"https://www.themoviedb.org/" + this.props.data.media_type + "/" + this.props.data.id}>
                         <h2>{this.getTitle()}</h2>
                     </a>
+                </div>
+
+                <div className="release-date">
+                    <h3>{this.getReleaseDate()}</h3>
                 </div>
 
                 <div className="card-poster">

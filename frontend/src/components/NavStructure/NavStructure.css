@@ -1,3 +1,15 @@
+.nav-structure {
+    z-index: 10;
+}
+
+.box {
+    position: fixed;
+    width: 1920px;
+    height: 60px;
+    background-color: rgb(8, 13, 37);
+    z-index: 9;
+}
+
 .nav-wrapper {
     display: flex;
     width: 100%;
@@ -66,17 +78,17 @@
     left: 35%;
     transform: translate(-50%, -50%);
     position: fixed;
+    z-index: 10;
 }
 
 .header {
-    justify-content: center;
-}
-
-.title {
+    position: fixed;
+    margin-top: 13px;
     color: rgb(255, 255, 255);
     display: flex;
+    left: 50%;
     justify-content: center;
-    padding-top: 12px;
     font-size: 30px;
     font-weight: bold;
+    z-index: 10;
 }

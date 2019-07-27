@@ -11,10 +11,11 @@ interface IProps {
 export default class NavStructure extends React.Component<IProps, {}> {
     public render() {
         return (
-            <div>
+            <div className="nav-structure">
                 <Header />
                 <SearchBar handleSearch={this.props.handleSearch} />
                 <Navbar />
+                <div className="box"></div>
             </div>
         );
     }
