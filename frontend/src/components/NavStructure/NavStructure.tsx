@@ -6,6 +6,7 @@ import Header from "./Header";
 
 interface IProps {
     handleSearch(e: any): any;
+    handlePageChange(page: string): any;
 }
 
 export default class NavStructure extends React.Component<IProps, {}> {
@@ -14,7 +15,7 @@ export default class NavStructure extends React.Component<IProps, {}> {
             <div className="nav-structure">
                 <Header />
                 <SearchBar handleSearch={this.props.handleSearch} />
-                <Navbar />
+                <Navbar handlePageChange={this.props.handlePageChange} />
                 <div className="box"></div>
             </div>
         );

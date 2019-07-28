@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import Home from "./components/Home";
-import SearchResult from "./components/SearchResult";
+import Search from "./components/Search";
 import NavStructure from "./components/NavStructure/NavStructure";
 
 interface IState {
@@ -9,8 +9,6 @@ interface IState {
     username: string;
     currentPage: string;
     searchTerm: string;
-    favourites: any;
-    tracking: any;
 }
 
 class App extends React.Component<{}, IState>{
@@ -21,8 +19,6 @@ class App extends React.Component<{}, IState>{
             username: "",
             currentPage: "home",
             searchTerm: "",
-            favourites: [],
-            tracking: []
         };
     }
 
@@ -37,7 +33,7 @@ class App extends React.Component<{}, IState>{
     }
 
     public movieExistsInDb = (id: number, media_type: string) => {
-        fetch("https://localhost:44339/api/Movies", {
+        fetch("http://mmtapi.azurewebsites.net/api/Movies", {
             method: "GET"
         }).then(response => {
             if (response.ok) {
@@ -61,13 +57,13 @@ class App extends React.Component<{}, IState>{
             media_type: data.media_type
         };
 
-        fetch("https://localhost:44339/api/User" + type, {
+        fetch("http://mmtapi.azurewebsites.net/api/User" + type, {
             method: "GET"
         }).then(response => {
             if (response.ok) {
                 response.json().then(data => {
                     if (data === body) { // remove favourites or tracking if already exists
-                        fetch("https://localhost:44339/api/User" + type, { method: "DELETE" });
+                        fetch("http://mmtapi.azurewebsites.net/api/User" + type, { method: "DELETE" });
                         console.log("deleted record from db");
                         return;
                     }
@@ -76,7 +72,7 @@ class App extends React.Component<{}, IState>{
         })
 
         // add to favourites/tracking if it is not already
-        fetch("https://localhost:44339/api/User" + type, {
+        fetch("http://mmtapi.azurewebsites.net/api/User" + type, {
             body: JSON.stringify(body),
             headers: {
                 Accept: "text/plain",
@@ -96,7 +92,7 @@ class App extends React.Component<{}, IState>{
             media_type: data.media_type
         };
 
-        fetch("https://localhost:44339/api/Movie", {
+        fetch("http://mmtapi.azurewebsites.net/api/Movies", {
             body: JSON.stringify(body),
             headers: {
                 Accept: "text/plain",
@@ -123,15 +119,15 @@ class App extends React.Component<{}, IState>{
         if (this.state.currentPage === "home") {
             return (
                 <div>
-                    <NavStructure handleSearch={this.handleSearch} />
+                    <NavStructure handleSearch={this.handleSearch} handlePageChange={this.handlePageChange} />
                     <Home updateDb={this.updateDb} />
                 </div>
             );
         } else if (this.state.currentPage === "search") {
             return (
                 <div>
-                    <NavStructure handleSearch={this.handleSearch} />
-                    <SearchResult searchTerm={this.state.searchTerm} updateDb={this.updateDb} />
+                    <NavStructure handleSearch={this.handleSearch} handlePageChange={this.handlePageChange} />
+                    <Search searchTerm={this.state.searchTerm} updateDb={this.updateDb} />
                 </div>
             );
         }

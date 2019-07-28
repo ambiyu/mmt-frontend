@@ -55,8 +55,8 @@ export default class Movie extends React.Component<IProps, {}> {
                 <div className="card-menu">
                     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
                     <div className="link-btns">
-                        <button id={"favourite" + this.props.data.id} className="favourite" title="Add to favourites" onClick={() => this.handleToggleButton("favourite")}><i className="material-icons">favorite_border</i></button>
-                        <button id={"tracking" + this.props.data.id} className="track" title="Track movie" onClick={() => this.handleToggleButton("tracking")}><i className="material-icons">remove_red_eye</i></button>
+                        <button id={"favourites" + this.props.data.id} className="favourite" title="Add To Favourites" onClick={() => this.handleToggleButton("favourites")}><i className="material-icons">favorite_border</i></button>
+                        <button id={"trackings" + this.props.data.id} className="track" title="Track Movie" onClick={() => this.handleToggleButton("trackings")}><i className="material-icons">remove_red_eye</i></button>
                     </div>
                 </div>
 

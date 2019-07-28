@@ -4,7 +4,7 @@
 
 .box {
     position: fixed;
-    width: 1920px;
+    width: 100%;
     height: 60px;
     background-color: rgb(8, 13, 37);
     z-index: 9;
@@ -75,7 +75,7 @@
     width: 50%;
     position: absolute;
     top: 3%;
-    left: 35%;
+    margin-left: 35%;
     transform: translate(-50%, -50%);
     position: fixed;
     z-index: 10;

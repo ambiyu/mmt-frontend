@@ -1,7 +1,11 @@
 import * as React from "react";
 import "./NavStructure.css";
 
-export default class Navbar extends React.Component<{}, {}> {
+interface IProps {
+    handlePageChange(page: string): any;
+}
+
+export default class Navbar extends React.Component<IProps, {}> {
     public render() {
         return (
             <div className="nav-wrapper">
