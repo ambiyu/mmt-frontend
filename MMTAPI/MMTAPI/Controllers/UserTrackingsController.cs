@@ -58,7 +58,7 @@ namespace MMTAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserTrackingsExists(id))
+                if (!UserTrackingsExists(userTrackings.MediaId, userTrackings.MediaType))
                 {
                     return NotFound();
                 }
@@ -82,7 +82,7 @@ namespace MMTAPI.Controllers
             }
             catch (DbUpdateException)
             {
-                if (UserTrackingsExists(userTrackings.Id))
+                if (UserTrackingsExists(userTrackings.MediaId, userTrackings.MediaType))
                 {
                     return Conflict();
                 }
@@ -111,9 +111,9 @@ namespace MMTAPI.Controllers
             return userTrackings;
         }
 
-        private bool UserTrackingsExists(int id)
+        private bool UserTrackingsExists(int media_id, String media_type)
         {
-            return _context.UserTrackings.Any(e => e.Id == id);
+            return _context.UserTrackings.Any(e => e.MediaId == media_id && e.MediaType.Equals(media_type));
         }
     }
 }

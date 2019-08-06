@@ -32,7 +32,7 @@ namespace MMTAPI.Model
         [StringLength(1023)]
         public string Overview { get; set; }
         [Column("status")]
-        [StringLength(31)]
+        [StringLength(30)]
         public string Status { get; set; }
         [Column("poster_path")]
         [StringLength(255)]
