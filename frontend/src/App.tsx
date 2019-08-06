@@ -33,18 +33,25 @@ class App extends React.Component<{}, IState>{
         this.setState({ currentPage: page });
     }
 
+    public setFavourite = (type: string, media_type: string, media_id: number) => {
+        var elem = document.getElementById(type + media_type + media_id);
+        fetch("https://mmtapi.azurewebsites.net/api/User" + type + "/Get/" + this.state.userId + "/" + media_type + "/" + media_id, {
+            method: "GET"
+        }).then(result => {
+            if (result.ok) {
+                if (elem != null) {
+                    elem.classList.add("active");
+                }
+            }
+        });
+    }
+
     public movieExistsInDb = (id: number, media_type: string) => {
         fetch("https://mmtapi.azurewebsites.net/api/Movies/GetByIdAndType/" + media_type + "/" + id, {
             method: "GET"
         }).then(result => {
             if (result.ok) {
-                result.json().then((movie: any) => {
-                    console.log(movie);
-                    if (movie !== null) {
-                        console.log("true");
-                        return true;
-                    }
-                })
+                return true;
             }
         });
         return false;
@@ -52,38 +59,35 @@ class App extends React.Component<{}, IState>{
 
     private alterFavourites = (data: any, type: string) => {
         const body = {
-            "user_id": this.state.userId,
-            "media_id": data.id,
-            "media_type": data.media_type
+            "userId": this.state.userId,
+            "mediaType": data.media_type,
+            "mediaId": data.id
         };
 
-        fetch("https://mmtapi.azurewebsites.net/api/User" + type, {
+        fetch("https://mmtapi.azurewebsites.net/api/User" + type + "/Get/" + this.state.userId + "/" + data.media_type + "/" + data.id, {
             method: "GET"
         }).then(response => {
             if (response.ok) {
-                response.json().then(data => {
-                    if (data === body) { // remove favourites or tracking if already exists
-                        fetch("http://mmtapi.azurewebsites.net/api/User" + type, { method: "DELETE" });
-                        console.log("deleted record from db");
-                        return;
+                response.json().then(result => {
+                    fetch("https://mmtapi.azurewebsites.net/api/User" + type + "/" + result.id, { method: "DELETE" });
+                    console.log("deleted record from db");
+                    return;
+                });
+            } else { // add to favourites/tracking if it is not already
+                fetch("https://mmtapi.azurewebsites.net/api/User" + type, {
+                    body: JSON.stringify(body),
+                    headers: {
+                        Accept: "text/plain",
+                        "Content-Type": "application/json"
+                    },
+                    method: "POST"
+                }).then((response) => {
+                    if (response.ok) {
+                        console.log("added record to db", response);
                     }
                 });
             }
         })
-
-        // add to favourites/tracking if it is not already
-        fetch("https://mmtapi.azurewebsites.net/api/User" + type, {
-            body: JSON.stringify(body),
-            headers: {
-                Accept: "text/plain",
-                "Content-Type": "application/json"
-            },
-            method: "POST"
-        }).then((response) => {
-            if (response.ok) {
-                console.log("added record to db");
-            }
-        });
     }
 
     private addMovieToDb = (data: any) => {
@@ -120,21 +124,21 @@ class App extends React.Component<{}, IState>{
             return (
                 <div>
                     <NavStructure handleSearch={this.handleSearch} handlePageChange={this.handlePageChange} />
-                    <Home updateDb={this.updateDb} />
+                    <Home updateDb={this.updateDb} setFavourite={this.setFavourite} />
                 </div>
             );
         } else if (this.state.currentPage === "search") {
             return (
                 <div>
                     <NavStructure handleSearch={this.handleSearch} handlePageChange={this.handlePageChange} />
-                    <Search searchTerm={this.state.searchTerm} updateDb={this.updateDb} />
+                    <Search searchTerm={this.state.searchTerm} updateDb={this.updateDb} setFavourite={this.setFavourite} />
                 </div>
             );
         } else if (this.state.currentPage === "favourites") {
             return (
                 <div>
                     <NavStructure handleSearch={this.handleSearch} handlePageChange={this.handlePageChange} />
-                    <Favourites type="favourites" user_id={this.state.userId} updateDb={this.updateDb} />
+                    <Favourites type="favourites" user_id={this.state.userId} updateDb={this.updateDb} setFavourite={this.setFavourite} />
                 </div>
             );
         }

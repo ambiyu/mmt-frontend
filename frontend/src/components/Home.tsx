@@ -2,6 +2,7 @@ import * as React from "react";
 import MovieCard from "./MovieCard";
 
 interface IProps {
+    setFavourite(type: string, media_type: string, media_id: number): void;
     updateDb(data: any, type: string, operation: string): any;
 }
 
@@ -57,7 +58,7 @@ export default class Home extends React.Component<IProps, IState> {
                         <header>Trending Movies</header>
                         <div className="trending-mv" id="trending-mv" >
                             {this.state.trendingMovies.map((result: any) =>
-                                <MovieCard key={result.id} data={result} updateDb={this.props.updateDb} mediaType="movie" />
+                                <MovieCard key={result.id} data={result} updateDb={this.props.updateDb} mediaType="movie" setFavourite={this.props.setFavourite} />
                             )}
                         </div>
                     </div>
@@ -65,7 +66,7 @@ export default class Home extends React.Component<IProps, IState> {
                         <header>Trending TV Series</header>
                         <div className="trending-tv" id="trending-tv" >
                             {this.state.trendingTv.map((result: any) =>
-                                <MovieCard key={result.id} data={result} updateDb={this.props.updateDb} mediaType="tv" />
+                                <MovieCard key={result.id} data={result} updateDb={this.props.updateDb} mediaType="tv" setFavourite={this.props.setFavourite} />
                             )}
                         </div>
                     </div>

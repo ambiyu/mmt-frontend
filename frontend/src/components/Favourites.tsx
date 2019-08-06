@@ -1,5 +1,5 @@
 import * as React from "react";
-import MovieCard from "./MovieCard";
+import MovieListing from "./MovieListing";
 
 interface IState {
     movies: any;
@@ -7,6 +7,7 @@ interface IState {
 }
 
 interface IProps {
+    setFavourite(type: string, media_type: string, media_id: number): void;
     updateDb(data: any, type: string, operation: string): any;
     type: string;
     user_id: number;
@@ -26,7 +27,10 @@ export default class Favourites extends React.Component<IProps, IState> {
         fetch("http://mmtapi.azurewebsites.net/api/Movies/Get" + this.props.type + "/" + this.props.user_id, {
             method: "GET"
         }).then((result: any) => {
-            result.json().then((movies: any) => this.setState({ movies, loading: false }));
+            result.json().then((movies: any) => {
+                console.log(movies);
+                this.setState({ movies, loading: false });
+            });
         })
     }
 
@@ -35,8 +39,8 @@ export default class Favourites extends React.Component<IProps, IState> {
             return (
                 <div>
                     <header>FINISHED</header>
-                    {this.state.movies.map((result: any) =>
-                        <MovieCard key={result.id} data={result} updateDb={this.props.updateDb} mediaType={result.media_type} />
+                    {this.state.movies.map((movie: any) =>
+                        <MovieListing key={movie.id} data={movie} />
                     )}
                 </div>
             );

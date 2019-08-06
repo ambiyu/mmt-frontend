@@ -2,6 +2,7 @@ import * as React from "react";
 import "./stylesheet.css";
 
 interface IProps {
+    setFavourite(type: string, media_type: string, media_id: number): void;
     updateDb(data: any, type: string, operation: string): any;
     mediaType: string;
     data: any;
@@ -9,6 +10,13 @@ interface IProps {
 
 
 export default class Movie extends React.Component<IProps, {}> {
+
+    // Activate favourites/tracking buttons depending 
+    componentDidMount = () => {
+        this.props.setFavourite("favourites", this.props.mediaType, this.props.data.id);
+        this.props.setFavourite("trackings", this.props.mediaType, this.props.data.id);
+    }
+
     private getTitle = () => {
         const data = this.props.data;
         if (data.name != null) {

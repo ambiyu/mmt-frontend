@@ -3,6 +3,7 @@ import MovieCard from "./MovieCard";
 import "./stylesheet.css"
 
 interface IProps {
+    setFavourite(type: string, media_type: string, media_id: number): void;
     updateDb(data: any, type: string, operation: string): any;
     searchTerm: string;
 }
@@ -46,7 +47,7 @@ export default class SearchResult extends React.Component<IProps, IState> {
                     <header className="search-header">SEARCH RESULTS FOR "{this.props.searchTerm.toLocaleUpperCase()}"</header>>
                     <div className="search-result">
                         {this.state.results.map((result: any) =>
-                            <MovieCard key={result.id} data={result} updateDb={this.props.updateDb} mediaType={result.media_type} />
+                            <MovieCard key={result.id} data={result} updateDb={this.props.updateDb} mediaType={result.media_type} setFavourite={this.props.setFavourite} />
                         )}
                     </div>
                 </div>
