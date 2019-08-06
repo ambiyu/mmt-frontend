@@ -45,7 +45,7 @@ namespace MMTAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUserFavourites(int id, UserFavourites userFavourites)
         {
-            if (id != userFavourites.FavouritesId)
+            if (id != userFavourites.Id)
             {
                 return BadRequest();
             }
@@ -82,7 +82,7 @@ namespace MMTAPI.Controllers
             }
             catch (DbUpdateException)
             {
-                if (UserFavouritesExists(userFavourites.FavouritesId))
+                if (UserFavouritesExists(userFavourites.Id))
                 {
                     return Conflict();
                 }
@@ -92,7 +92,7 @@ namespace MMTAPI.Controllers
                 }
             }
 
-            return CreatedAtAction("GetUserFavourites", new { id = userFavourites.FavouritesId }, userFavourites);
+            return CreatedAtAction("GetUserFavourites", new { id = userFavourites.Id }, userFavourites);
         }
 
         // DELETE: api/UserFavourites/5
@@ -113,7 +113,7 @@ namespace MMTAPI.Controllers
 
         private bool UserFavouritesExists(int id)
         {
-            return _context.UserFavourites.Any(e => e.FavouritesId == id);
+            return _context.UserFavourites.Any(e => e.Id == id);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace MMTAPI.Model
         public virtual DbSet<Movie> Movie { get; set; }
         public virtual DbSet<Person> Person { get; set; }
         public virtual DbSet<UserFavourites> UserFavourites { get; set; }
-        public virtual DbSet<UserTracking> UserTracking { get; set; }
+        public virtual DbSet<UserTrackings> UserTrackings { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -60,18 +60,18 @@ namespace MMTAPI.Model
 
             modelBuilder.Entity<UserFavourites>(entity =>
             {
-                entity.HasKey(e => e.FavouritesId)
+                entity.HasKey(e => e.Id)
                     .HasName("PK__UserFavo__93DBE7F2C56B9ADC");
 
-                entity.Property(e => e.FavouritesId).ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedNever();
             });
 
-            modelBuilder.Entity<UserTracking>(entity =>
+            modelBuilder.Entity<UserTrackings>(entity =>
             {
-                entity.HasKey(e => e.TrackingId)
+                entity.HasKey(e => e.Id)
                     .HasName("PK__UserTrac__7AC3E9AEB1789248");
 
-                entity.Property(e => e.TrackingId).ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedNever();
             });
         }
     }

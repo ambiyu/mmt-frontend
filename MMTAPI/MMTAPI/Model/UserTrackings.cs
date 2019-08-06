@@ -5,10 +5,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MMTAPI.Model
 {
-    public partial class UserTracking
+    public partial class UserTrackings
     {
-        [Column("tracking_id")]
-        public int TrackingId { get; set; }
+        [Column("id")]
+        public int Id { get; set; }
         [Required]
         [Column("user_id")]
         public int? UserId { get; set; }

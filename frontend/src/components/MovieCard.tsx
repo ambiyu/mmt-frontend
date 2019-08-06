@@ -27,9 +27,7 @@ export default class Movie extends React.Component<IProps, {}> {
     }
 
     public handleToggleButton = (type: string) => {
-        var elem = document.getElementById(type + this.props.data.id);
-        console.log(type);
-        console.log(elem);
+        var elem = document.getElementById(type + this.props.mediaType + this.props.data.id);
         if (elem != null) {
             elem.classList.toggle("active");
             const data = this.props.data;
@@ -39,7 +37,8 @@ export default class Movie extends React.Component<IProps, {}> {
                 poster_path: data.poster_path,
                 overview: data.overview,
                 release_date: data.release_date,
-                media_type: data.media_type
+                media_type: this.props.mediaType,
+                status: data.status
             }
             if (elem.classList.contains("active")) {
                 this.props.updateDb(movieData, type, "POST");
@@ -55,8 +54,8 @@ export default class Movie extends React.Component<IProps, {}> {
                 <div className="card-menu">
                     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
                     <div className="link-btns">
-                        <button id={"favourites" + this.props.data.id} className="favourite" title="Add To Favourites" onClick={() => this.handleToggleButton("favourites")}><i className="material-icons">favorite_border</i></button>
-                        <button id={"trackings" + this.props.data.id} className="track" title="Track Movie" onClick={() => this.handleToggleButton("trackings")}><i className="material-icons">remove_red_eye</i></button>
+                        <button id={"favourites" + this.props.mediaType + this.props.data.id} className="favourite" title="Add To Favourites" onClick={() => this.handleToggleButton("favourites")}><i className="material-icons">favorite_border</i></button>
+                        <button id={"trackings" + this.props.mediaType + this.props.data.id} className="track" title="Track Movie" onClick={() => this.handleToggleButton("trackings")}><i className="material-icons">remove_red_eye</i></button>
                     </div>
                 </div>
 

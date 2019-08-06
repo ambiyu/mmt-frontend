@@ -10,9 +10,9 @@ export default class Navbar extends React.Component<IProps, {}> {
         return (
             <div className="nav-wrapper">
                 <nav className="navbar">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/movies">Movies</a></li>
-                    <li><a href="/series">TV Series</a></li>
+                    <li><a href="#" onClick={() => this.props.handlePageChange("home")}>Home</a></li>
+                    <li><a href="#" onClick={() => this.props.handlePageChange("favourites")} > Movies</a></li>
+                    <li><a href="#">TV Series</a></li>
                 </nav>
             </div>
         );

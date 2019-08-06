@@ -7,8 +7,8 @@ namespace MMTAPI.Model
 {
     public partial class UserFavourites
     {
-        [Column("favourites_id")]
-        public int FavouritesId { get; set; }
+        [Column("id")]
+        public int Id { get; set; }
         [Required]
         [Column("user_id")]
         public int? UserId { get; set; }

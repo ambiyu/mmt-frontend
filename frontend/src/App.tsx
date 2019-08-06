@@ -3,6 +3,7 @@ import "./App.css";
 import Home from "./components/Home";
 import Search from "./components/Search";
 import NavStructure from "./components/NavStructure/NavStructure";
+import Favourites from "./components/Favourites";
 
 interface IState {
     userId: number;
@@ -15,7 +16,7 @@ class App extends React.Component<{}, IState>{
     public constructor(props: any) {
         super(props);
         this.state = {
-            userId: 0,
+            userId: 1,
             username: "",
             currentPage: "home",
             searchTerm: "",
@@ -33,18 +34,17 @@ class App extends React.Component<{}, IState>{
     }
 
     public movieExistsInDb = (id: number, media_type: string) => {
-        fetch("http://mmtapi.azurewebsites.net/api/Movies", {
+        fetch("https://mmtapi.azurewebsites.net/api/Movies/GetByIdAndType/" + media_type + "/" + id, {
             method: "GET"
-        }).then(response => {
-            if (response.ok) {
-                response.json().then(data => {
-                    data.forEach((movie: any) => {
-                        console.log(movie.media_type + "/" + movie.id);
-                        if (movie.id === id && movie.media_type === media_type) {
-                            return true;
-                        }
-                    })
-                });
+        }).then(result => {
+            if (result.ok) {
+                result.json().then((movie: any) => {
+                    console.log(movie);
+                    if (movie !== null) {
+                        console.log("true");
+                        return true;
+                    }
+                })
             }
         });
         return false;
@@ -52,12 +52,12 @@ class App extends React.Component<{}, IState>{
 
     private alterFavourites = (data: any, type: string) => {
         const body = {
-            user_id: this.state.userId,
-            media_id: data.id,
-            media_type: data.media_type
+            "user_id": this.state.userId,
+            "media_id": data.id,
+            "media_type": data.media_type
         };
 
-        fetch("http://mmtapi.azurewebsites.net/api/User" + type, {
+        fetch("https://mmtapi.azurewebsites.net/api/User" + type, {
             method: "GET"
         }).then(response => {
             if (response.ok) {
@@ -72,7 +72,7 @@ class App extends React.Component<{}, IState>{
         })
 
         // add to favourites/tracking if it is not already
-        fetch("http://mmtapi.azurewebsites.net/api/User" + type, {
+        fetch("https://mmtapi.azurewebsites.net/api/User" + type, {
             body: JSON.stringify(body),
             headers: {
                 Accept: "text/plain",
@@ -88,11 +88,11 @@ class App extends React.Component<{}, IState>{
 
     private addMovieToDb = (data: any) => {
         const body = {
-            media_id: data.id,
-            media_type: data.media_type
+            "id": data.id,
+            "media_type": data.media_type
         };
 
-        fetch("http://mmtapi.azurewebsites.net/api/Movies", {
+        fetch("https://mmtapi.azurewebsites.net/api/Movies", {
             body: JSON.stringify(body),
             headers: {
                 Accept: "text/plain",
@@ -128,6 +128,13 @@ class App extends React.Component<{}, IState>{
                 <div>
                     <NavStructure handleSearch={this.handleSearch} handlePageChange={this.handlePageChange} />
                     <Search searchTerm={this.state.searchTerm} updateDb={this.updateDb} />
+                </div>
+            );
+        } else if (this.state.currentPage === "favourites") {
+            return (
+                <div>
+                    <NavStructure handleSearch={this.handleSearch} handlePageChange={this.handlePageChange} />
+                    <Favourites type="favourites" user_id={this.state.userId} updateDb={this.updateDb} />
                 </div>
             );
         }

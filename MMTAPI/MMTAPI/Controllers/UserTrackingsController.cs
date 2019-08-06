@@ -22,35 +22,35 @@ namespace MMTAPI.Controllers
 
         // GET: api/UserTrackings
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserTracking>>> GetUserTracking()
+        public async Task<ActionResult<IEnumerable<UserTrackings>>> GetUserTrackings()
         {
-            return await _context.UserTracking.ToListAsync();
+            return await _context.UserTrackings.ToListAsync();
         }
 
         // GET: api/UserTrackings/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserTracking>> GetUserTracking(int id)
+        public async Task<ActionResult<UserTrackings>> GetUserTracking(int id)
         {
-            var userTracking = await _context.UserTracking.FindAsync(id);
+            var userTrackings = await _context.UserTrackings.FindAsync(id);
 
-            if (userTracking == null)
+            if (userTrackings == null)
             {
                 return NotFound();
             }
 
-            return userTracking;
+            return userTrackings;
         }
 
         // PUT: api/UserTrackings/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserTracking(int id, UserTracking userTracking)
+        public async Task<IActionResult> PutUserTrackings(int id, UserTrackings userTrackings)
         {
-            if (id != userTracking.TrackingId)
+            if (id != userTrackings.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(userTracking).State = EntityState.Modified;
+            _context.Entry(userTrackings).State = EntityState.Modified;
 
             try
             {
@@ -58,7 +58,7 @@ namespace MMTAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserTrackingExists(id))
+                if (!UserTrackingsExists(id))
                 {
                     return NotFound();
                 }
@@ -73,16 +73,16 @@ namespace MMTAPI.Controllers
 
         // POST: api/UserTrackings
         [HttpPost]
-        public async Task<ActionResult<UserTracking>> PostUserTracking(UserTracking userTracking)
+        public async Task<ActionResult<UserTrackings>> PostUserTrackings(UserTrackings userTrackings)
         {
-            _context.UserTracking.Add(userTracking);
+            _context.UserTrackings.Add(userTrackings);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
-                if (UserTrackingExists(userTracking.TrackingId))
+                if (UserTrackingsExists(userTrackings.Id))
                 {
                     return Conflict();
                 }
@@ -92,28 +92,28 @@ namespace MMTAPI.Controllers
                 }
             }
 
-            return CreatedAtAction("GetUserTracking", new { id = userTracking.TrackingId }, userTracking);
+            return CreatedAtAction("GetUserTracking", new { id = userTrackings.Id }, userTrackings);
         }
 
         // DELETE: api/UserTrackings/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<UserTracking>> DeleteUserTracking(int id)
+        public async Task<ActionResult<UserTrackings>> DeleteUserTrackings(int id)
         {
-            var userTracking = await _context.UserTracking.FindAsync(id);
-            if (userTracking == null)
+            var userTrackings = await _context.UserTrackings.FindAsync(id);
+            if (userTrackings == null)
             {
                 return NotFound();
             }
 
-            _context.UserTracking.Remove(userTracking);
+            _context.UserTrackings.Remove(userTrackings);
             await _context.SaveChangesAsync();
 
-            return userTracking;
+            return userTrackings;
         }
 
-        private bool UserTrackingExists(int id)
+        private bool UserTrackingsExists(int id)
         {
-            return _context.UserTracking.Any(e => e.TrackingId == id);
+            return _context.UserTrackings.Any(e => e.Id == id);
         }
     }
 }

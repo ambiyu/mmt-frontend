@@ -47,7 +47,6 @@ export default class Home extends React.Component<IProps, IState> {
             movies.json().then(data => this.setState({ trendingMovies: data.results }));
             tv.json().then(data => this.setState({ trendingTv: data.results, loading: false }));
         });
-
     }
 
     public render() {
@@ -74,7 +73,7 @@ export default class Home extends React.Component<IProps, IState> {
             );
         } else {
             return (
-                <div className="home">
+                <div className="homepage">
                     <header>Loading...</header>
                 </div>
             )

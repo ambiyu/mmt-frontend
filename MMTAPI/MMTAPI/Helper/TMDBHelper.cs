@@ -10,7 +10,7 @@ namespace MMTAPI.Helper
 {
     public class TMDBHelper {
         public static void test() {
-            Console.WriteLine(getMovieById(1399, "tv"));
+            Console.WriteLine(getMediaById(1399, "tv"));
 
             // Pause the program execution
             Console.ReadLine();
@@ -26,9 +26,9 @@ namespace MMTAPI.Helper
             } else return "$Title";
         }
 
-        public static Movie getMovieById(int id, String media_type) {
+        public static Movie getMediaById(int media_id, String media_type) {
             String APIKey = "5001541809100a7e7385e7c891e817d2";
-            String APIUrl = "https://api.themoviedb.org/3/" + media_type + "/" + id + "?api_key=" + APIKey;
+            String APIUrl = "https://api.themoviedb.org/3/" + media_type + "/" + media_id + "?api_key=" + APIKey;
 
             String movieInfoJson = new WebClient().DownloadString(APIUrl);
             dynamic jsonObj = JsonConvert.DeserializeObject<dynamic>(movieInfoJson);
@@ -43,15 +43,17 @@ namespace MMTAPI.Helper
             String release_year = release_date.Substring(0, 4);
             String overview = jsonObj["overview"];
             String status = jsonObj["status"];
+            String poster_path = jsonObj["poster_path"];
 
             Movie movie = new Movie {
-                MediaId = id,
+                MediaId = media_id,
                 MediaType = media_type,
                 Title = getTitle(jsonObj),
                 ReleaseDate = release_date,
                 ReleaseYear = release_year,
                 Overview = overview,
-                Status = status
+                Status = status,
+                PosterPath = poster_path
             };
 
             return movie;
