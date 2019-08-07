@@ -153,17 +153,27 @@ body {
 .mv-listing {
     margin-top: 70px;
     margin-left: 250px;
-}
-
-.mv-listing header {
-    position: absolute;
-    padding-left: 180px;
-    font-size: 30px;
     color: white;
 }
 
+.mv-listing header {
+    font-weight: bold;
+    color: #00A0EC;
+    position: absolute;
+    margin-left: 180px;
+    font-size: 30px;
+}
+
 .mv-listing img {
-    position: relative;
     width: 160px;
     height: 240px;
+}
+
+.mv-listing .overview {
+    position: absolute;
+    display: inline-block;
+    width: 40%;
+    overflow-wrap: normal;
+    margin-left: 180px;
+    margin-top: 50px;
 }
