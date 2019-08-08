@@ -1,9 +1,9 @@
 import React from "react";
-import "./App.css";
 import Home from "./components/Home";
 import Search from "./components/Search";
 import NavStructure from "./components/NavStructure/NavStructure";
 import Favourites from "./components/Favourites";
+import Login from "./components/Login/Login";
 
 interface IState {
     userId: number;
@@ -18,7 +18,7 @@ class App extends React.Component<{}, IState>{
         this.state = {
             userId: 1,
             username: "",
-            currentPage: "home",
+            currentPage: "",
             searchTerm: "",
         };
     }
@@ -27,6 +27,10 @@ class App extends React.Component<{}, IState>{
         e.preventDefault();
         const searchTerm = e.target.search.value;
         this.setState({ currentPage: "search", searchTerm });
+    }
+
+    public handleLogin = (userId: number, username: string) => {
+        this.setState({ userId, username, currentPage: "home" });
     }
 
     public handlePageChange = (page: string) => {
@@ -139,6 +143,12 @@ class App extends React.Component<{}, IState>{
                 <div>
                     <NavStructure handleSearch={this.handleSearch} handlePageChange={this.handlePageChange} />
                     <Favourites type="favourites" user_id={this.state.userId} updateDb={this.updateDb} setFavourite={this.setFavourite} />
+                </div>
+            );
+        } else { // login
+            return (
+                <div>
+                    <Login handleLogin={this.handleLogin} />
                 </div>
             );
         }

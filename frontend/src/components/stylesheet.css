@@ -1,6 +1,5 @@
 body {
     background: rgb(8, 13, 37);
-    font-family: 'Open Sans', sans-serif;
 }
 
 .card-title :not(img) {
@@ -81,7 +80,7 @@ body {
     width: 200px;
     margin-top: 250px;
     text-align: center;
-    color: rgba(255, 255, 255, 0.747);
+    color: white;
     opacity: 0;
     transition: 0.5s;
     font-size: 15px;
@@ -176,4 +175,57 @@ body {
     overflow-wrap: normal;
     margin-left: 180px;
     margin-top: 50px;
+}
+
+.mv-listing .release-status {
+    position: absolute;
+    margin-left: 180px;
+    margin-top: 220px;
+}
+
+.login {
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
+.login .sel-header {
+    margin-top: 130px;
+    position: absolute;
+}
+
+.user-list {
+    position: relative;
+    margin-top: 200px;
+}
+
+.user .avatar {
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 200px;
+    height: 200px;
+}
+
+.user {
+    border-radius: 10%;
+    width: 220px;
+    height: 270px;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.user-wrap {
+    justify-content: center;
+    padding: 30px;
+    display: inline-block;
+}
+
+.user-wrap :hover {
+    background-color: #00A0EC;
+    cursor: pointer;
+}
+
+.user h2 {
+    margin-top: 10px;
+    text-align: center;
+    position: relative;
 }

@@ -21,6 +21,7 @@ export default class MovieListing extends React.Component<IProps, {}> {
 
                 <a href={"https://www.themoviedb.org/" + data.mediaType + "/" + data.mediaId}><header>{data.title} ({data.releaseYear})</header></a>
 
+                <h3 className="release-status">Release Date: {data.releaseDate} Status: {data.status}</h3>
 
                 <div className="poster">
                     <a href={"https://www.themoviedb.org/" + data.mediaType + "/" + data.mediaId}>
