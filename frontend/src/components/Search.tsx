@@ -54,7 +54,7 @@ export default class SearchResult extends React.Component<IProps, IState> {
             );
         } else {
             return (
-                <header>loading</header>
+                <header className="loading">Loading...</header>
             );
         }
     }

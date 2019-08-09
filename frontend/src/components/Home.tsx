@@ -75,7 +75,7 @@ export default class Home extends React.Component<IProps, IState> {
         } else {
             return (
                 <div className="homepage">
-                    <header>Loading...</header>
+                    <header className="loading">Loading...</header>
                 </div>
             )
         }

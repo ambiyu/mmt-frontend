@@ -3,7 +3,7 @@ import Home from "./components/Home";
 import Search from "./components/Search";
 import NavStructure from "./components/NavStructure/NavStructure";
 import Favourites from "./components/Favourites";
-import Login from "./components/Login/Login";
+import Login from "./components/Login";
 
 interface IState {
     userId: number;
@@ -26,7 +26,8 @@ class App extends React.Component<{}, IState>{
     public handleSearch = (e: any) => {
         e.preventDefault();
         const searchTerm = e.target.search.value;
-        this.setState({ currentPage: "search", searchTerm });
+        this.setState({ searchTerm });
+        this.handlePageChange("search");
     }
 
     public handleLogin = (userId: number, username: string) => {
@@ -35,6 +36,16 @@ class App extends React.Component<{}, IState>{
 
     public handlePageChange = (page: string) => {
         this.setState({ currentPage: page });
+        var curr = document.getElementById("nav-" + this.state.currentPage);
+        var next = document.getElementById("nav-" + page);
+        if (next != null && curr != null) {
+            curr.classList.remove("current-page");
+            next.classList.add("current-page");
+        } else if (curr != null && next == null) { // to search
+            curr.classList.remove("current-page");
+        } else if (curr == null && next != null) { // from search
+            next.classList.add("current-page");
+        }
     }
 
     public setFavourite = (type: string, media_type: string, media_id: number) => {
@@ -145,6 +156,13 @@ class App extends React.Component<{}, IState>{
                     <Favourites type="favourites" user_id={this.state.userId} updateDb={this.updateDb} setFavourite={this.setFavourite} />
                 </div>
             );
+        } else if (this.state.currentPage === "watchlist") {
+            return (
+                <div>
+                    <NavStructure handleSearch={this.handleSearch} handlePageChange={this.handlePageChange} />
+                    <Favourites type="watchlist" user_id={this.state.userId} updateDb={this.updateDb} setFavourite={this.setFavourite} />
+                </div>
+            )
         } else { // login
             return (
                 <div>
