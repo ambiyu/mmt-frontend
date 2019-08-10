@@ -59,7 +59,7 @@ body {
     margin-top: 10px;
 }
 
-.favourite, .track {
+.favourite, .watchlist {
     height: 38px;
     width: 38px;
     padding: 5px;
@@ -72,7 +72,7 @@ body {
     outline: none
 }
 
-.favourite:hover, .track:hover, .favourite.active, .track.active {
+.favourite:hover, .watchlist:hover, .favourite.active, .watchlist.active {
     background: rgb(0, 157, 255);
 }
 
@@ -95,7 +95,7 @@ body {
     font-size: 25px;
 }
 
-.trending-tv, .trending-mv {
+.trending {
     height: 320px;
     position: relative;
     display: grid;
@@ -114,20 +114,20 @@ body {
     padding-bottom: 20px;
 }
 
-#trending-mv::-webkit-scrollbar, #trending-tv::-webkit-scrollbar {
+#trending::-webkit-scrollbar {
     border-radius: 10px;
     height: 10px;
     width: 6px;
     background-color: #F5F5F5;
 }
 
-#trending-mv::-webkit-scrollbar-track, #trending-tv::-webkit-scrollbar-track {
+#trending::-webkit-scrollbar-track {
     border-radius: 10px;
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     background-color: #F5F5F5;
 }
 
-#trending-mv::-webkit-scrollbar-thumb, #trending-tv::-webkit-scrollbar-thumb {
+#trending::-webkit-scrollbar-thumb {
     border-radius: 10px;
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
     background-color: #00A0EC;

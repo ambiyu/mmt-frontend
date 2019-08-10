@@ -2,7 +2,7 @@ import * as React from "react";
 import "./stylesheet.css";
 
 interface IProps {
-    updateDb(data: any, type: string, operation: string): any;
+    setFavourite(data: any, type: string, operation: string): any;
     media_type: string;
     data: any;
 }
@@ -42,9 +42,9 @@ export default class Movie extends React.Component<IProps, {}> {
                 status: data.status
             }
             if (elem.classList.contains("active")) { // should update
-                this.props.updateDb(movieData, type, "POST");
+                this.props.setFavourite(movieData, type, "POST");
             } else {
-                this.props.updateDb(movieData, type, "DELETE");
+                this.props.setFavourite(movieData, type, "DELETE");
             }
         }
     }
@@ -56,7 +56,7 @@ export default class Movie extends React.Component<IProps, {}> {
                     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
                     <div className="link-btns">
                         <button id={"favourites" + this.props.media_type + this.props.data.media_id} className="favourite" title="Add to Favourites" onClick={() => this.handleToggleButton("favourites")}><i className="material-icons">favorite_border</i></button>
-                        <button id={"watchlist" + this.props.media_type + this.props.data.media_id} className="track" title="Add to Watchlist" onClick={() => this.handleToggleButton("trackings")}><i className="material-icons">remove_red_eye</i></button>
+                        <button id={"watchlist" + this.props.media_type + this.props.data.media_id} className="watchlist" title="Add to Watchlist" onClick={() => this.handleToggleButton("watchlist")}><i className="material-icons">remove_red_eye</i></button>
                     </div>
                 </div>
 

@@ -1,10 +1,9 @@
 import * as React from "react";
-import MovieCard from "./MovieCard";
 import "./stylesheet.css"
 import MovieCardList from "./MovieCardList";
 
 interface IProps {
-    updateDb(data: any, type: string, operation: string): any;
+    setFavourite(data: any, type: string, operation: string): any;
     searchTerm: string;
     user_id: number;
 }
@@ -51,7 +50,7 @@ export default class SearchResult extends React.Component<IProps, IState> {
             return (
                 <div className="search-page">
                     <header className="search-header">SEARCH RESULTS FOR "{this.props.searchTerm.toLocaleUpperCase()}"</header>
-                    <MovieCardList data={this.state.results} updateDb={this.props.updateDb} media_type={null} user_id={this.props.user_id} />
+                    <MovieCardList data={this.state.results} setFavourite={this.props.setFavourite} media_type={null} user_id={this.props.user_id} />
                 </div>
             );
         } else {

@@ -1,7 +1,6 @@
 import * as React from "react";
 import MovieListing from "./MovieListing";
 import "./stylesheet.css";
-import MovieCardList from "./MovieCardList";
 
 interface IState {
     movies: any;
@@ -19,13 +18,13 @@ export default class Favourites extends React.Component<IProps, IState> {
         super(props);
         this.state = {
             movies: [],
-            loading: true,
+            loading: true
         };
     }
 
     public componentDidMount = () => {
         if (this.state.loading) {
-            fetch("http://mmtapi.azurewebsites.net/api/Media/GetFavourites/" + this.props.user_id, {
+            fetch("http://mmtapi.azurewebsites.net/api/Media/GetWatchlist/" + this.props.user_id, {
                 method: "GET"
             }).then((result: any) => {
                 result.json().then((movies: any) => {
@@ -38,9 +37,10 @@ export default class Favourites extends React.Component<IProps, IState> {
     public render() {
         if (!this.state.loading && this.state.movies !== null) {
             return (
-                <div className="fav-page">
-                    <header className="fav-header">Your Favourites</header>
-                    <MovieCardList data={this.state.movies} setFavourite={this.props.setFavourite} media_type={null} user_id={this.props.user_id} />
+                <div>
+                    {this.state.movies.map((data: any) =>
+                        <MovieListing key={data.media_id} data={data} />
+                    )}
                 </div>
             );
         } else {

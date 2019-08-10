@@ -4,6 +4,7 @@ import Search from "./components/Search";
 import NavStructure from "./components/NavStructure/NavStructure";
 import Favourites from "./components/Favourites";
 import Login from "./components/Login";
+import Watchlist from "./components/Watchlist";
 
 interface IState {
     user_id: number;
@@ -49,32 +50,6 @@ class App extends React.Component<{}, IState>{
         }
     }
 
-    public setFavourite = (type: string, media_type: string, media_id: number) => {
-        var elem = document.getElementById(type + media_type + media_id);
-        fetch("https://mmtapi.azurewebsites.net/api/User" + type + "/" + this.state.user_id + "/" + media_type + "/" + media_id, {
-            method: "GET"
-        }).then(result => {
-            if (result.ok) {
-                if (elem != null) {
-                    elem.classList.add("active");
-                }
-            }
-        });
-    }
-
-    public getFavouritesForUser = (type: string) => {
-        fetch("https://mmtapi.azurewebsites.net/api/Media/Get" + type + "/" + this.state.user_id, {
-            method: "GET"
-        }).then(response => {
-            if (response.ok) {
-                response.json().then((data: any) => {
-                    console.log(data);
-                    return data;
-                })
-            }
-        });
-    }
-
     public movieExistsInDb = (id: number, media_type: string) => {
         fetch("https://mmtapi.azurewebsites.net/api/Media/GetByIdAndType/" + media_type + "/" + id, {
             method: "GET"
@@ -112,7 +87,7 @@ class App extends React.Component<{}, IState>{
                     method: "POST"
                 }).then((response) => {
                     if (response.ok) {
-                        console.log("added record to db", response);
+                        console.log("added record to db");
                     }
                 });
             }
@@ -139,7 +114,7 @@ class App extends React.Component<{}, IState>{
         })
     }
 
-    public updateDb = (data: any, type: string, operation: string) => {
+    public setFavourite = (data: any, type: string, operation: string) => {
         if (!this.movieExistsInDb(data.media_id, data.media_type)) {
             this.addMovieToDb(data);
             this.alterFavourites(data, type);
@@ -153,28 +128,28 @@ class App extends React.Component<{}, IState>{
             return (
                 <div>
                     <NavStructure handleSearch={this.handleSearch} handlePageChange={this.handlePageChange} />
-                    <Home updateDb={this.updateDb} user_id={this.state.user_id} />
+                    <Home setFavourite={this.setFavourite} user_id={this.state.user_id} />
                 </div>
             );
         } else if (this.state.currentPage === "search") {
             return (
                 <div>
                     <NavStructure handleSearch={this.handleSearch} handlePageChange={this.handlePageChange} />
-                    <Search searchTerm={this.state.searchTerm} updateDb={this.updateDb} user_id={this.state.user_id} />
+                    <Search searchTerm={this.state.searchTerm} setFavourite={this.setFavourite} user_id={this.state.user_id} />
                 </div>
             );
         } else if (this.state.currentPage === "favourites") {
             return (
                 <div>
                     <NavStructure handleSearch={this.handleSearch} handlePageChange={this.handlePageChange} />
-                    <Favourites type="favourites" user_id={this.state.user_id} updateDb={this.updateDb} />
+                    <Favourites user_id={this.state.user_id} setFavourite={this.setFavourite} />
                 </div>
             );
         } else if (this.state.currentPage === "watchlist") {
             return (
                 <div>
                     <NavStructure handleSearch={this.handleSearch} handlePageChange={this.handlePageChange} />
-                    <Favourites type="watchlist" user_id={this.state.user_id} updateDb={this.updateDb} />
+                    <Watchlist user_id={this.state.user_id} setFavourite={this.setFavourite} />
                 </div>
             )
         } else { // login

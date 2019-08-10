@@ -2,7 +2,7 @@ import * as React from "react";
 import MovieCardList from "./MovieCardList";
 
 interface IProps {
-    updateDb(data: any, type: string, operation: string): any;
+    setFavourite(data: any, type: string, operation: string): any;
     user_id: number;
 }
 
@@ -22,19 +22,6 @@ export default class Home extends React.Component<IProps, IState> {
         };
     }
 
-    // private getTrending = (media_type: string) => {
-    //     const APIKey = "5001541809100a7e7385e7c891e817d2";
-    //     fetch("https://api.themoviedb.org/3/trending/" + media_type + "/week?api_key=" + APIKey, {
-    //         method: "GET"
-    //     }).then(response => {
-    //         if (response.ok) {
-    //             response.json().then(data => {
-    //                 this.setState
-    //             });
-    //         }
-    //     });
-    // }
-
     public componentDidMount() {
         const APIKey = "5001541809100a7e7385e7c891e817d2";
         Promise.all([
@@ -43,7 +30,7 @@ export default class Home extends React.Component<IProps, IState> {
         ]).then(([movies, tv]) => {
             movies.json().then(data => {
                 var trendingMovies = data.results;
-                trendingMovies.forEach((mv: any) => {
+                trendingMovies.forEach((mv: any) => { // rename key to "media_id"
                     mv.media_id = mv.id;
                     delete mv.id;
                 });
@@ -67,15 +54,11 @@ export default class Home extends React.Component<IProps, IState> {
                 <div className="homepage">
                     <div className="trending-mv-wrap">
                         <header>Trending Movies</header>
-                        <div className="trending-mv" id="trending-mv" >
-                            <MovieCardList data={this.state.trendingMovies} updateDb={this.props.updateDb} media_type="movie" user_id={this.props.user_id} />
-                        </div>
+                        <MovieCardList data={this.state.trendingMovies} setFavourite={this.props.setFavourite} media_type="movie" user_id={this.props.user_id} />
                     </div>
                     <div className="trending-tv-wrap">
                         <header>Trending TV Series</header>
-                        <div className="trending-tv" id="trending-tv" >
-                            <MovieCardList data={this.state.trendingTv} updateDb={this.props.updateDb} media_type="tv" user_id={this.props.user_id} />
-                        </div>
+                        <MovieCardList data={this.state.trendingTv} setFavourite={this.props.setFavourite} media_type="tv" user_id={this.props.user_id} />
                     </div>
                 </div>
             );
