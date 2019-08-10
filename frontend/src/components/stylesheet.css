@@ -134,6 +134,7 @@ body {
 }
 
 .mv-listing {
+    height: 200px;
     position: relative;
     margin-top: 100px;
     margin-left: 250px;
@@ -145,6 +146,7 @@ body {
     color: #00A0EC;
     position: absolute;
     margin-left: 180px;
+    margin-top: -10px;
     font-size: 30px;
 }
 
@@ -157,9 +159,9 @@ body {
     position: absolute;
     display: inline-block;
     width: 40%;
-    overflow-wrap: normal;
+    height: 170px;
     margin-left: 180px;
-    margin-top: 50px;
+    margin-top: 40px;
 }
 
 .mv-listing .release-status {

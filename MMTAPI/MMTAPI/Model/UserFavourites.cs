@@ -8,16 +8,16 @@ namespace MMTAPI.Model
 {
     public partial class UserFavourites
     {
-        [Column("id")]
-        public int Id { get; set; }
         [Column("user_id")]
         [JsonProperty(PropertyName = "user_id")]
         public int UserId { get; set; }
-        [Required]
         [Column("media_type")]
+        [JsonProperty(PropertyName = "media_type")]
         [StringLength(5)]
         public string MediaType { get; set; }
         [Column("media_id")]
+        [JsonProperty(PropertyName = "media_id")]
         public int MediaId { get; set; }
+
     }
 }

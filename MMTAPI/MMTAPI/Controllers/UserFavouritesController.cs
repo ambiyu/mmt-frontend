@@ -13,9 +13,9 @@ namespace MMTAPI.Controllers
     [ApiController]
     public class UserFavouritesController : ControllerBase
     {
-        private readonly myfilmbaseContext _context;
+        private readonly MyMovieTrackerContext _context;
 
-        public UserFavouritesController(myfilmbaseContext context)
+        public UserFavouritesController(MyMovieTrackerContext context)
         {
             _context = context;
         }
@@ -28,10 +28,10 @@ namespace MMTAPI.Controllers
         }
 
         // GET: api/UserFavourites/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UserFavourites>> GetUserFavourites(int id)
+        [HttpGet("{user_id}/{media_type}/{media_id}")]
+        public async Task<ActionResult<UserFavourites>> GetUserFavourites(int user_id, String media_type, int media_id)
         {
-            var userFavourites = await _context.UserFavourites.FindAsync(id);
+            var userFavourites = await _context.UserFavourites.FindAsync(user_id, media_type, media_id);
 
             if (userFavourites == null)
             {
@@ -39,50 +39,6 @@ namespace MMTAPI.Controllers
             }
 
             return userFavourites;
-        }
-
-        // GET: api/UserFavourites/Get/{user_id}/{media_type}/{media_id}
-        [HttpGet]
-        [Route("Get")]
-        [Route("Get/{user_id}/{media_type}/{media_id}")]
-        public async Task<ActionResult<UserFavourites>> GetUserFavourites(int user_id, String media_type, int media_id) {
-            var uf = await _context.UserFavourites.FirstOrDefaultAsync(f => f.UserId == user_id && f.MediaType.Equals(media_type) && f.MediaId == media_id);
-
-            if (uf == null) {
-                return NotFound();
-            }
-
-            return uf;
-        }
-
-        // PUT: api/UserFavourites/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserFavourites(int id, UserFavourites userFavourites)
-        {
-            if (id != userFavourites.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(userFavourites).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserFavouritesExists(userFavourites.MediaId, userFavourites.MediaType, userFavourites.UserId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
         }
 
         // POST: api/UserFavourites
@@ -96,7 +52,7 @@ namespace MMTAPI.Controllers
             }
             catch (DbUpdateException)
             {
-                if (UserFavouritesExists(userFavourites.MediaId, userFavourites.MediaType, userFavourites.UserId))
+                if (UserFavouritesExists(userFavourites.UserId, userFavourites.MediaType, userFavourites.MediaId))
                 {
                     return Conflict();
                 }
@@ -106,16 +62,14 @@ namespace MMTAPI.Controllers
                 }
             }
 
-            return CreatedAtAction("GetUserFavourites", new { id = userFavourites.Id }, userFavourites);
+            return CreatedAtAction("GetUserFavourites", new { user_id = userFavourites.UserId, media_type = userFavourites.MediaType, media_id = userFavourites.MediaId }, userFavourites);
         }
 
-        // DELETE: api/UserFavourites/
-
         // DELETE: api/UserFavourites/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<UserFavourites>> DeleteUserFavourites(int id)
+        [HttpDelete("{user_id}/{media_type}/{media_id}")]
+        public async Task<ActionResult<UserFavourites>> DeleteUserFavourites(int user_id, String media_type, int media_id)
         {
-            var userFavourites = await _context.UserFavourites.FindAsync(id);
+            var userFavourites = await _context.UserFavourites.FindAsync(user_id, media_type, media_id);
             if (userFavourites == null)
             {
                 return NotFound();
@@ -127,9 +81,9 @@ namespace MMTAPI.Controllers
             return userFavourites;
         }
 
-        private bool UserFavouritesExists(int media_id, String media_type, int user_id)
+        private bool UserFavouritesExists(int user_id, String media_type, int media_id)
         {
-            return _context.UserFavourites.Any(e => e.MediaId == media_id && e.MediaType.Equals(media_type) && e.UserId == user_id);
+            return _context.UserFavourites.Any(e => e.UserId == user_id && e.MediaType.Equals(media_type) && e.MediaId == media_id);
         }
     }
 }

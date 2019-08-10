@@ -14,7 +14,6 @@ namespace MMTAPI
     {
         public static void Main(string[] args) {
             CreateWebHostBuilder(args).Build().Run();
-            //MMTAPI.Helper.TMDBHelper.test();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

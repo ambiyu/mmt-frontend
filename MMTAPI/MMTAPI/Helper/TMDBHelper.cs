@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace MMTAPI.Helper
 {
-    public class TMDBHelper {
+    public class TMDBHelper
+    {
         public static void test() {
             Console.WriteLine(getMediaById(1399, "tv"));
 
@@ -26,7 +27,7 @@ namespace MMTAPI.Helper
             } else return "$Title";
         }
 
-        public static Movie getMediaById(int media_id, String media_type) {
+        public static Media getMediaById(int media_id, String media_type) {
             String APIKey = "5001541809100a7e7385e7c891e817d2";
             String APIUrl = "https://api.themoviedb.org/3/" + media_type + "/" + media_id + "?api_key=" + APIKey;
 
@@ -45,7 +46,7 @@ namespace MMTAPI.Helper
             String status = jsonObj["status"];
             String poster_path = jsonObj["poster_path"];
 
-            Movie movie = new Movie {
+            Media movie = new Media {
                 MediaId = media_id,
                 MediaType = media_type,
                 Title = getTitle(jsonObj),
