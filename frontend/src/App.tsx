@@ -68,6 +68,7 @@ class App extends React.Component<{}, IState>{
         }).then(response => {
             if (response.ok) {
                 response.json().then((data: any) => {
+                    console.log(data);
                     return data;
                 })
             }
@@ -152,28 +153,28 @@ class App extends React.Component<{}, IState>{
             return (
                 <div>
                     <NavStructure handleSearch={this.handleSearch} handlePageChange={this.handlePageChange} />
-                    <Home updateDb={this.updateDb} getFavouritesForUser={this.getFavouritesForUser} />
+                    <Home updateDb={this.updateDb} user_id={this.state.user_id} />
                 </div>
             );
         } else if (this.state.currentPage === "search") {
             return (
                 <div>
                     <NavStructure handleSearch={this.handleSearch} handlePageChange={this.handlePageChange} />
-                    <Search searchTerm={this.state.searchTerm} updateDb={this.updateDb} getFavouritesForUser={this.getFavouritesForUser} />
+                    <Search searchTerm={this.state.searchTerm} updateDb={this.updateDb} user_id={this.state.user_id} />
                 </div>
             );
         } else if (this.state.currentPage === "favourites") {
             return (
                 <div>
                     <NavStructure handleSearch={this.handleSearch} handlePageChange={this.handlePageChange} />
-                    <Favourites type="favourites" user_id={this.state.user_id} updateDb={this.updateDb} getFavouritesForUser={this.getFavouritesForUser} />
+                    <Favourites type="favourites" user_id={this.state.user_id} updateDb={this.updateDb} />
                 </div>
             );
         } else if (this.state.currentPage === "watchlist") {
             return (
                 <div>
                     <NavStructure handleSearch={this.handleSearch} handlePageChange={this.handlePageChange} />
-                    <Favourites type="watchlist" user_id={this.state.user_id} updateDb={this.updateDb} getFavouritesForUser={this.getFavouritesForUser} />
+                    <Favourites type="watchlist" user_id={this.state.user_id} updateDb={this.updateDb} />
                 </div>
             )
         } else { // login

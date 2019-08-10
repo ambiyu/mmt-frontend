@@ -2,6 +2,7 @@ import * as React from "react";
 import MovieListing from "./MovieListing";
 import MovieCard from "./MovieCard";
 import "./stylesheet.css";
+import MovieCardList from "./MovieCardList";
 
 interface IState {
     movies: any;
@@ -9,7 +10,6 @@ interface IState {
 }
 
 interface IProps {
-    getFavouritesForUser(type: string): any;
     updateDb(data: any, type: string, operation: string): any;
     type: string;
     user_id: number;
@@ -39,12 +39,9 @@ export default class Favourites extends React.Component<IProps, IState> {
         if (!this.state.loading && this.state.movies !== null) {
             if (this.props.type === "favourites") {
                 return (
-                    <div className="search-page">
-                        <div className="search-result">
-                            {this.state.movies.map((data: any) =>
-                                <MovieCard key={data.media_type + data.media_id} data={data} updateDb={this.props.updateDb} media_type={data.media_type} getFavouritesForUser={this.props.getFavouritesForUser} />
-                            )}
-                        </div>
+                    <div className="fav-page">
+                        <header className="fav-header">Your Favourites</header>
+                        <MovieCardList data={this.state.movies} updateDb={this.props.updateDb} media_type={null} user_id={this.props.user_id} />
                     </div>
                 );
             } else {

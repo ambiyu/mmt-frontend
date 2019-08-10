@@ -1,11 +1,9 @@
 import * as React from "react";
-import MovieCard from "./MovieCard";
-import MovieListing from "./MovieListing";
 import MovieCardList from "./MovieCardList";
 
 interface IProps {
-    getFavouritesForUser(type: string): any;
     updateDb(data: any, type: string, operation: string): any;
+    user_id: number;
 }
 
 interface IState {
@@ -70,18 +68,13 @@ export default class Home extends React.Component<IProps, IState> {
                     <div className="trending-mv-wrap">
                         <header>Trending Movies</header>
                         <div className="trending-mv" id="trending-mv" >
-                            <MovieCardList data={this.state.trendingMovies} updateDb={this.props.updateDb} media_type="movie" getFavouritesForUser={this.props.getFavouritesForUser} />
-                            {this.state.trendingMovies.map((data: any) =>
-                                <MovieCard key={data.media_id} data={data} updateDb={this.props.updateDb} media_type="movie" getFavouritesForUser={this.props.getFavouritesForUser} />
-                            )}
+                            <MovieCardList data={this.state.trendingMovies} updateDb={this.props.updateDb} media_type="movie" user_id={this.props.user_id} />
                         </div>
                     </div>
                     <div className="trending-tv-wrap">
                         <header>Trending TV Series</header>
                         <div className="trending-tv" id="trending-tv" >
-                            {this.state.trendingTv.map((data: any) =>
-                                <MovieCard key={data.media_id} data={data} updateDb={this.props.updateDb} media_type="tv" getFavouritesForUser={this.props.getFavouritesForUser} />
-                            )}
+                            <MovieCardList data={this.state.trendingTv} updateDb={this.props.updateDb} media_type="tv" user_id={this.props.user_id} />
                         </div>
                     </div>
                 </div>

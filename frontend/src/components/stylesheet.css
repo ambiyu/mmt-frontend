@@ -88,25 +88,6 @@ body {
     font-size: 15px;
 }
 
-.search-page {
-    margin-top: 30px;
-}
-
-.search-result {
-    position: absolute;
-    display: grid;
-    margin-left: 230px;
-    grid-gap: 30px;
-    grid-template-columns: repeat(7, 200px);
-}
-
-.search-header {
-    padding-top: 50px;
-    padding-left: 230px;
-    font-size: 20px;
-    color: rgb(255, 255, 255);
-}
-
 .homepage {
     margin-top: 80px;
     margin-left: 200px;
@@ -153,7 +134,8 @@ body {
 }
 
 .mv-listing {
-    margin-top: 70px;
+    position: relative;
+    margin-top: 100px;
     margin-left: 250px;
     color: white;
 }
@@ -236,4 +218,24 @@ body {
 
 .loading {
     color: white;
+}
+
+.card-list {
+    position: absolute;
+    display: grid;
+    margin-left: 230px;
+    grid-gap: 30px;
+    grid-template-columns: repeat(7, 200px);
+}
+
+.fav-page, .search-page {
+    margin-top: 30px;
+}
+
+.search-header, .fav-header {
+    margin-top: 80px;
+    margin-left: 230px;
+    padding-bottom: 20px;
+    font-size: 23px;
+    color: rgb(255, 255, 255);
 }
