@@ -3,7 +3,7 @@ import MovieCard from "./MovieCard";
 import "./stylesheet.css"
 
 interface IProps {
-    setFavourite(type: string, media_type: string, media_id: number): void;
+    getFavouritesForUser(type: string): any;
     updateDb(data: any, type: string, operation: string): any;
     searchTerm: string;
 }
@@ -32,7 +32,12 @@ export default class SearchResult extends React.Component<IProps, IState> {
             }).then(response => {
                 if (response.ok) {
                     response.json().then(data => {
-                        this.setState({ results: data.results, loading: false, prevSearchTerm: this.props.searchTerm });
+                        var results = data.results;
+                        results.forEach((mv: any) => {
+                            mv.media_id = mv.id;
+                            delete mv.id;
+                        });
+                        this.setState({ results, loading: false, prevSearchTerm: this.props.searchTerm });
                     });
                 }
             });
@@ -46,8 +51,8 @@ export default class SearchResult extends React.Component<IProps, IState> {
                 <div className="search-page">
                     <header className="search-header">SEARCH RESULTS FOR "{this.props.searchTerm.toLocaleUpperCase()}"</header>>
                     <div className="search-result">
-                        {this.state.results.map((result: any) =>
-                            <MovieCard key={result.id} data={result} updateDb={this.props.updateDb} mediaType={result.media_type} setFavourite={this.props.setFavourite} />
+                        {this.state.results.map((movie: any) =>
+                            <MovieCard key={movie.media_id} data={movie} updateDb={this.props.updateDb} media_type={movie.media_type} />
                         )}
                     </div>
                 </div>

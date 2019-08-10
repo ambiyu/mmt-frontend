@@ -6,7 +6,7 @@ import Favourites from "./components/Favourites";
 import Login from "./components/Login";
 
 interface IState {
-    userId: number;
+    user_id: number;
     username: string;
     currentPage: string;
     searchTerm: string;
@@ -16,7 +16,7 @@ class App extends React.Component<{}, IState>{
     public constructor(props: any) {
         super(props);
         this.state = {
-            userId: 1,
+            user_id: 1,
             username: "",
             currentPage: "",
             searchTerm: "",
@@ -30,8 +30,9 @@ class App extends React.Component<{}, IState>{
         this.handlePageChange("search");
     }
 
-    public handleLogin = (userId: number, username: string) => {
-        this.setState({ userId, username, currentPage: "home" });
+    public handleLogin = (user_id: number, username: string) => {
+        this.setState({ user_id, username });
+        this.handlePageChange("home");
     }
 
     public handlePageChange = (page: string) => {
@@ -50,7 +51,7 @@ class App extends React.Component<{}, IState>{
 
     public setFavourite = (type: string, media_type: string, media_id: number) => {
         var elem = document.getElementById(type + media_type + media_id);
-        fetch("https://mmtapi.azurewebsites.net/api/User" + type + "/Get/" + this.state.userId + "/" + media_type + "/" + media_id, {
+        fetch("https://mmtapi.azurewebsites.net/api/User" + type + "/" + this.state.user_id + "/" + media_type + "/" + media_id, {
             method: "GET"
         }).then(result => {
             if (result.ok) {
@@ -61,8 +62,20 @@ class App extends React.Component<{}, IState>{
         });
     }
 
+    public getFavouritesForUser = (type: string) => {
+        fetch("https://mmtapi.azurewebsites.net/api/Media/Get" + type + "/" + this.state.user_id, {
+            method: "GET"
+        }).then(response => {
+            if (response.ok) {
+                response.json().then((data: any) => {
+                    return data;
+                })
+            }
+        });
+    }
+
     public movieExistsInDb = (id: number, media_type: string) => {
-        fetch("https://mmtapi.azurewebsites.net/api/Movies/GetByIdAndType/" + media_type + "/" + id, {
+        fetch("https://mmtapi.azurewebsites.net/api/Media/GetByIdAndType/" + media_type + "/" + id, {
             method: "GET"
         }).then(result => {
             if (result.ok) {
@@ -74,17 +87,17 @@ class App extends React.Component<{}, IState>{
 
     private alterFavourites = (data: any, type: string) => {
         const body = {
-            "userId": this.state.userId,
-            "mediaType": data.media_type,
-            "mediaId": data.id
+            "user_id": this.state.user_id,
+            "media_type": data.media_type,
+            "media_id": data.media_id
         };
 
-        fetch("https://mmtapi.azurewebsites.net/api/User" + type + "/Get/" + this.state.userId + "/" + data.media_type + "/" + data.id, {
+        fetch("https://mmtapi.azurewebsites.net/api/User" + type + "/" + this.state.user_id + "/" + data.media_type + "/" + data.media_id, {
             method: "GET"
         }).then(response => {
             if (response.ok) {
                 response.json().then(result => {
-                    fetch("https://mmtapi.azurewebsites.net/api/User" + type + "/" + result.id, { method: "DELETE" });
+                    fetch("https://mmtapi.azurewebsites.net/api/User" + type + "/" + result.user_id + "/" + result.media_type + "/" + result.media_id, { method: "DELETE" });
                     console.log("deleted record from db");
                     return;
                 });
@@ -107,11 +120,11 @@ class App extends React.Component<{}, IState>{
 
     private addMovieToDb = (data: any) => {
         const body = {
-            "id": data.id,
-            "media_type": data.media_type
+            "media_type": data.media_type,
+            "media_id": data.media_id
         };
 
-        fetch("https://mmtapi.azurewebsites.net/api/Movies", {
+        fetch("https://mmtapi.azurewebsites.net/api/Media", {
             body: JSON.stringify(body),
             headers: {
                 Accept: "text/plain",
@@ -126,7 +139,7 @@ class App extends React.Component<{}, IState>{
     }
 
     public updateDb = (data: any, type: string, operation: string) => {
-        if (!this.movieExistsInDb(data.id, data.media_type)) {
+        if (!this.movieExistsInDb(data.media_id, data.media_type)) {
             this.addMovieToDb(data);
             this.alterFavourites(data, type);
         } else {
@@ -139,28 +152,28 @@ class App extends React.Component<{}, IState>{
             return (
                 <div>
                     <NavStructure handleSearch={this.handleSearch} handlePageChange={this.handlePageChange} />
-                    <Home updateDb={this.updateDb} setFavourite={this.setFavourite} />
+                    <Home updateDb={this.updateDb} getFavouritesForUser={this.getFavouritesForUser} />
                 </div>
             );
         } else if (this.state.currentPage === "search") {
             return (
                 <div>
                     <NavStructure handleSearch={this.handleSearch} handlePageChange={this.handlePageChange} />
-                    <Search searchTerm={this.state.searchTerm} updateDb={this.updateDb} setFavourite={this.setFavourite} />
+                    <Search searchTerm={this.state.searchTerm} updateDb={this.updateDb} getFavouritesForUser={this.getFavouritesForUser} />
                 </div>
             );
         } else if (this.state.currentPage === "favourites") {
             return (
                 <div>
                     <NavStructure handleSearch={this.handleSearch} handlePageChange={this.handlePageChange} />
-                    <Favourites type="favourites" user_id={this.state.userId} updateDb={this.updateDb} setFavourite={this.setFavourite} />
+                    <Favourites type="favourites" user_id={this.state.user_id} updateDb={this.updateDb} getFavouritesForUser={this.getFavouritesForUser} />
                 </div>
             );
         } else if (this.state.currentPage === "watchlist") {
             return (
                 <div>
                     <NavStructure handleSearch={this.handleSearch} handlePageChange={this.handlePageChange} />
-                    <Favourites type="watchlist" user_id={this.state.userId} updateDb={this.updateDb} setFavourite={this.setFavourite} />
+                    <Favourites type="watchlist" user_id={this.state.user_id} updateDb={this.updateDb} getFavouritesForUser={this.getFavouritesForUser} />
                 </div>
             )
         } else { // login

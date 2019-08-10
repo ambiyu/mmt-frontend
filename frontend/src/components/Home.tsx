@@ -1,8 +1,10 @@
 import * as React from "react";
 import MovieCard from "./MovieCard";
+import MovieListing from "./MovieListing";
+import MovieCardList from "./MovieCardList";
 
 interface IProps {
-    setFavourite(type: string, media_type: string, media_id: number): void;
+    getFavouritesForUser(type: string): any;
     updateDb(data: any, type: string, operation: string): any;
 }
 
@@ -10,10 +12,6 @@ interface IState {
     loading: boolean;
     trendingMovies: any;
     trendingTv: any;
-    // latestMovies: any;
-    // latestTv: any;
-    // upcomingMovies: any;
-    // upcomingTv: any;
 }
 
 export default class Home extends React.Component<IProps, IState> {
@@ -45,8 +43,23 @@ export default class Home extends React.Component<IProps, IState> {
             fetch("https://api.themoviedb.org/3/trending/movie/week?api_key=" + APIKey, { method: "GET" }),
             fetch("https://api.themoviedb.org/3/trending/tv/week?api_key=" + APIKey, { method: "GET" })
         ]).then(([movies, tv]) => {
-            movies.json().then(data => this.setState({ trendingMovies: data.results }));
-            tv.json().then(data => this.setState({ trendingTv: data.results, loading: false }));
+            movies.json().then(data => {
+                var trendingMovies = data.results;
+                trendingMovies.forEach((mv: any) => {
+                    mv.media_id = mv.id;
+                    delete mv.id;
+                });
+                this.setState({ trendingMovies })
+            });
+
+            tv.json().then(data => {
+                var trendingTv = data.results;
+                trendingTv.forEach((tv: any) => {
+                    tv.media_id = tv.id;
+                    delete tv.id;
+                });
+                this.setState({ trendingTv, loading: false });
+            });
         });
     }
 
@@ -57,16 +70,17 @@ export default class Home extends React.Component<IProps, IState> {
                     <div className="trending-mv-wrap">
                         <header>Trending Movies</header>
                         <div className="trending-mv" id="trending-mv" >
-                            {this.state.trendingMovies.map((result: any) =>
-                                <MovieCard key={result.id} data={result} updateDb={this.props.updateDb} mediaType="movie" setFavourite={this.props.setFavourite} />
+                            <MovieCardList data={this.state.trendingMovies} updateDb={this.props.updateDb} media_type="movie" getFavouritesForUser={this.props.getFavouritesForUser} />
+                            {this.state.trendingMovies.map((data: any) =>
+                                <MovieCard key={data.media_id} data={data} updateDb={this.props.updateDb} media_type="movie" getFavouritesForUser={this.props.getFavouritesForUser} />
                             )}
                         </div>
                     </div>
                     <div className="trending-tv-wrap">
                         <header>Trending TV Series</header>
                         <div className="trending-tv" id="trending-tv" >
-                            {this.state.trendingTv.map((result: any) =>
-                                <MovieCard key={result.id} data={result} updateDb={this.props.updateDb} mediaType="tv" setFavourite={this.props.setFavourite} />
+                            {this.state.trendingTv.map((data: any) =>
+                                <MovieCard key={data.media_id} data={data} updateDb={this.props.updateDb} media_type="tv" getFavouritesForUser={this.props.getFavouritesForUser} />
                             )}
                         </div>
                     </div>

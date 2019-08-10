@@ -2,20 +2,13 @@ import * as React from "react";
 import "./stylesheet.css";
 
 interface IProps {
-    setFavourite(type: string, media_type: string, media_id: number): void;
     updateDb(data: any, type: string, operation: string): any;
-    mediaType: string;
+    media_type: string;
     data: any;
 }
 
 
 export default class Movie extends React.Component<IProps, {}> {
-
-    // Activate favourites/watchlist buttons if user has movie favourited
-    componentDidMount = () => {
-        this.props.setFavourite("favourites", this.props.mediaType, this.props.data.id);
-        this.props.setFavourite("watchlist", this.props.mediaType, this.props.data.id);
-    }
 
     private getTitle = () => {
         const data = this.props.data;
@@ -35,20 +28,20 @@ export default class Movie extends React.Component<IProps, {}> {
     }
 
     public handleToggleButton = (type: string) => {
-        var elem = document.getElementById(type + this.props.mediaType + this.props.data.id);
+        var elem = document.getElementById(type + this.props.media_type + this.props.data.media_id);
         if (elem != null) {
             elem.classList.toggle("active");
             const data = this.props.data;
             const movieData = {
-                id: data.id,
+                media_id: data.media_id,
                 title: this.getTitle(),
                 poster_path: data.poster_path,
                 overview: data.overview,
                 release_date: data.release_date,
-                media_type: this.props.mediaType,
+                media_type: this.props.media_type,
                 status: data.status
             }
-            if (elem.classList.contains("active")) {
+            if (elem.classList.contains("active")) { // should update
                 this.props.updateDb(movieData, type, "POST");
             } else {
                 this.props.updateDb(movieData, type, "DELETE");
@@ -62,13 +55,13 @@ export default class Movie extends React.Component<IProps, {}> {
                 <div className="card-menu">
                     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
                     <div className="link-btns">
-                        <button id={"favourites" + this.props.mediaType + this.props.data.id} className="favourite" title="Add to Favourites" onClick={() => this.handleToggleButton("favourites")}><i className="material-icons">favorite_border</i></button>
-                        <button id={"watchlist" + this.props.mediaType + this.props.data.id} className="track" title="Add to Watchlist" onClick={() => this.handleToggleButton("trackings")}><i className="material-icons">remove_red_eye</i></button>
+                        <button id={"favourites" + this.props.media_type + this.props.data.media_id} className="favourite" title="Add to Favourites" onClick={() => this.handleToggleButton("favourites")}><i className="material-icons">favorite_border</i></button>
+                        <button id={"watchlist" + this.props.media_type + this.props.data.media_id} className="track" title="Add to Watchlist" onClick={() => this.handleToggleButton("trackings")}><i className="material-icons">remove_red_eye</i></button>
                     </div>
                 </div>
 
                 <div className="card-title">
-                    <a href={"https://www.themoviedb.org/" + this.props.data.media_type + "/" + this.props.data.id}>
+                    <a href={"https://www.themoviedb.org/" + this.props.data.media_type + "/" + this.props.data.media_id}>
                         <h2>{this.getTitle()}</h2>
                     </a>
                 </div>
@@ -78,7 +71,7 @@ export default class Movie extends React.Component<IProps, {}> {
                 </div>
 
                 <div className="card-poster">
-                    <a href={"https://www.themoviedb.org/" + this.props.mediaType + "/" + this.props.data.id}>
+                    <a href={"https://www.themoviedb.org/" + this.props.media_type + "/" + this.props.data.media_id}>
                         <img src={"https://image.tmdb.org/t/p/w500" + this.props.data.poster_path} alt={this.getTitle()} />
                     </a>
                 </div>

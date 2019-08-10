@@ -27,7 +27,7 @@ export default class Login extends React.Component<IProps, IState> {
     }
 
     private getAvatar = (user: any) => {
-        return "/avatars/" + (user.userId % 5 + 1) + ".svg";
+        return "/avatars/" + (user.user_id % 5 + 1) + ".svg";
     }
 
     private authenticate = () => {
@@ -67,11 +67,11 @@ export default class Login extends React.Component<IProps, IState> {
         });
     }
 
-    private handleClick = (userId: number, username: string) => {
-        if (userId === 1) {
+    private handleClick = (user_id: number, username: string) => {
+        if (user_id === 1) {
             this.setState({ authenticating: true });
         } else {
-            this.props.handleLogin(userId, username);
+            this.props.handleLogin(user_id, username);
         }
     }
 
@@ -84,10 +84,10 @@ export default class Login extends React.Component<IProps, IState> {
             return (
                 <div className="user-list">
                     {this.state.users.map((user: any) =>
-                        <div className="user-wrap">
-                            <div className="user" onClick={() => this.handleClick(user.userId, user.name)} >
-                                <img className="avatar" key={user.userId} src={this.getAvatar(user)} alt=""></img>
-                                <h2>{user.name}</h2>
+                        <div className="user-wrap" key={user.user_id} >
+                            <div className="user" onClick={() => this.handleClick(user.user_id, user.username)} >
+                                <img className="avatar" src={this.getAvatar(user)} alt=""></img>
+                                <h2>{user.username}</h2>
                             </div>
                         </div>
                     )}
@@ -97,7 +97,7 @@ export default class Login extends React.Component<IProps, IState> {
     }
 
     componentDidMount() {
-        fetch("https://mmtapi.azurewebsites.net/api/People", {
+        fetch("https://mmtapi.azurewebsites.net/api/Users", {
             method: "GET"
         }).then(result => {
             if (result.ok) {
