@@ -46,7 +46,7 @@ namespace MMTAPI.Helper
             String status = jsonObj["status"];
             String poster_path = jsonObj["poster_path"];
 
-            Media movie = new Media {
+            Media media = new Media {
                 MediaId = media_id,
                 MediaType = media_type,
                 Title = getTitle(jsonObj),
@@ -57,7 +57,7 @@ namespace MMTAPI.Helper
                 PosterPath = poster_path
             };
 
-            return movie;
+            return media;
         }
     }
 }

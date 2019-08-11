@@ -32,8 +32,12 @@ class App extends React.Component<{}, IState>{
     }
 
     public handleLogin = (user_id: number, username: string) => {
-        this.setState({ user_id, username });
-        this.handlePageChange("home");
+        this.setState({ user_id, username, currentPage: "home" }, () => {
+            var elem = document.getElementById("nav-home");
+            if (elem != null) {
+                elem.classList.add("current-page");
+            }
+        });
     }
 
     public handlePageChange = (page: string) => {

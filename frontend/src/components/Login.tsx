@@ -9,7 +9,7 @@ interface IProps {
 interface IState {
     users: any;
     authenticating: boolean;
-    authenticated: boolean;
+    managing: boolean;
     refCamera: any;
     predResult: any;
 }
@@ -20,7 +20,7 @@ export default class Login extends React.Component<IProps, IState> {
         this.state = {
             users: [],
             authenticating: false,
-            authenticated: false,
+            managing: false,
             refCamera: React.createRef(),
             predResult: null
         };
@@ -34,7 +34,7 @@ export default class Login extends React.Component<IProps, IState> {
         const screenshot = this.state.refCamera.current.getScreenshot();
 
         const apiKey = "4b82ef1a5a7f4c2a9c23380768522746";
-        const apiEndpoint = "https://australiaeast.api.cognitive.microsoft.com/customvision/v3.0/Prediction/";
+        const apiEndpoint = "https://australiaeast.api.cognitive.microsoft.com/customvision/v3.0/Prediction/024de653-0188-4e51-b8eb-03a9c5a202ef/classify/iterations/Iteration3/image";
         const base64 = require('base64-js');
         const base64content = screenshot.split(";")[1].split(",")[1]
         const byteArray = base64.toByteArray(base64content);
@@ -55,12 +55,11 @@ export default class Login extends React.Component<IProps, IState> {
                     console.log(json.predictions[0])
 
                     this.setState({ predResult: json.predictions[0] })
-                    if (this.state.predResult.probability > 0.7) {
-                        this.setState({ authenticated: true })
+                    if (this.state.predResult.probability > 0.7 && this.state.predResult.tagName !== "Negative") {
+                        this.props.handleLogin(1, this.state.users[0].username);
                     } else {
-                        this.setState({ authenticated: false })
                         console.log(json.predictions[0].tagName)
-                        alert("Authentication failed");
+                        alert("Authentication failed. " + json.predictions[0].probability + "% matching.");
                     }
                 })
             }
@@ -75,18 +74,58 @@ export default class Login extends React.Component<IProps, IState> {
         }
     }
 
-    private manageUsers = (e: any) => {
-
+    private handleSubmit = (e: any) => {
+        e.preventDefault();
+        const username = e.target.search.value;
+        this.manageUsers(-1, username, "add");
     }
 
-    private displayUsers = () => {
+    private manageUsers = (user_id: number, username: string, action: string) => {
+        if (user_id === 1) {
+            alert("You cannot delete this user!");
+            return;
+        } else if (action === "add") {
+            fetch("https://mmtapi.azurewebsites.net/api/Users", {
+                body: JSON.stringify({ "username": username }),
+                headers: {
+                    Accept: "text/plain",
+                    "Content-Type": "application/json"
+                },
+                method: "POST"
+            }).then(response => {
+                if (response.ok) {
+                    response.json().then((result: any) => {
+                        const users = [...this.state.users];
+                        users.push({ user_id: result.user_id, username: result.username });
+                        this.setState({ users });
+                    })
+                }
+            })
+        } else if (action === "delete") {
+            fetch("https://mmtapi.azurewebsites.net/api/Users/" + user_id, { method: "DELETE" }
+            ).then(response => {
+                if (response.ok) {
+                    response.json().then((result: any) => {
+                        const users = [...this.state.users];
+                        var index = users.indexOf({ user_id: result.user_id, username: result.username });
+                        if (index !== -1) { users.splice(index, 1) }
+                        this.setState({ users });
+                    })
+                }
+            })
+        }
+    }
+
+    private displayUsers = (deleting: string) => {
         if (this.state.users != null) {
             return (
                 <div className="user-list">
                     {this.state.users.map((user: any) =>
                         <div className="user-wrap" key={user.user_id} >
+                            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
                             <div className="user" onClick={() => this.handleClick(user.user_id, user.username)} >
-                                <img className="avatar" src={this.getAvatar(user)} alt=""></img>
+                                <button className={"delete-user" + deleting} onClick={() => this.manageUsers(user.user_id, "", "delete")}><i className="material-icons">cancel</i></button>
+                                <img className="avatar" src={"/avatars/" + (user.user_id % 5 + 1) + ".svg"} alt=""></img>
                                 <h2>{user.username}</h2>
                             </div>
                         </div>
@@ -108,16 +147,43 @@ export default class Login extends React.Component<IProps, IState> {
         });
     }
 
-
     public render() {
-        if (!this.state.authenticating) {
+        const { authenticating, managing } = this.state;
+        if (!authenticating && !managing) {
             return (
                 <div>
                     <Header />
                     <div className="login">
                         <h2 className="sel-header">Select user</h2>
-                        {this.displayUsers()}
+                        {this.displayUsers("")}
                     </div>
+                    <div className="login-btns">
+                        <button className="login-manage" onClick={() => this.setState({ managing: true })}>Manage Users</button>
+                    </div>
+
+                </div >
+            );
+        } else if (!authenticating && managing) {
+            return (
+                <div>
+                    <Header />
+                    <div className="login">
+                        <h2 className="sel-header">Select user</h2>
+                        {this.displayUsers("-del")}
+                    </div>
+                    <div className="login-btns">
+                        <button className="login-done" onClick={() => this.setState({ managing: false })}>Done</button>
+                        <div className="add-user">
+                            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+                            <form className="search-bar" onSubmit={this.handleSubmit}>
+                                <input type="text" name="search" className="search-text" placeholder="Enter username" />
+                                <button type="submit" className="add-button" >
+                                    <i className="material-icons">add</i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
                 </div>
             );
         } else {
@@ -129,9 +195,10 @@ export default class Login extends React.Component<IProps, IState> {
                             screenshotFormat="image/jpeg"
                             ref={this.state.refCamera}
                         />
-                        <div className="login-button">
-                            <div className="btn btn-primary bottom-button" onClick={this.authenticate}>Login</div>
-                        </div>
+                    </div>
+                    <div className="auth-btn">
+                        <button className="back-button" onClick={() => this.setState({ authenticating: false })}>Back</button>
+                        <button className="login-button" onClick={this.authenticate}>Login</button>
                     </div>
                 </div>
             );

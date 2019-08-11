@@ -1,5 +1,4 @@
 import * as React from "react";
-import MovieListing from "./MovieListing";
 import "./stylesheet.css";
 import MovieCardList from "./MovieCardList";
 

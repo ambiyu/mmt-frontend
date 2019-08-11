@@ -22,6 +22,10 @@ export default class Favourites extends React.Component<IProps, IState> {
         };
     }
 
+    public handleRemove = () => {
+
+    }
+
     public componentDidMount = () => {
         if (this.state.loading) {
             fetch("http://mmtapi.azurewebsites.net/api/Media/GetWatchlist/" + this.props.user_id, {

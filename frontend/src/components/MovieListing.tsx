@@ -16,7 +16,7 @@ export default class MovieListing extends React.Component<IProps, {}> {
         return (
             <div className="mv-listing">
                 <div className="overview">
-                    <text>{data.overview}</text>
+                    <p>{data.overview}</p>
                 </div>
 
                 <a href={"https://www.themoviedb.org/" + data.media_type + "/" + data.media_id}><header>{data.title} ({data.release_year})</header></a>
