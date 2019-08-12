@@ -1,5 +1,6 @@
 import * as React from "react";
 import MovieListing from "./MovieListing";
+import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon, FacebookShareCount } from 'react-share'
 import "./stylesheet.css";
 
 interface IState {
@@ -13,7 +14,7 @@ interface IProps {
 }
 
 
-export default class Favourites extends React.Component<IProps, IState> {
+export default class Watchlist extends React.Component<IProps, IState> {
     constructor(props: any) {
         super(props);
         this.state = {
@@ -41,18 +42,26 @@ export default class Favourites extends React.Component<IProps, IState> {
     public render() {
         if (!this.state.loading && this.state.movies !== null) {
             return (
-                <div>
-
-                    {
-                        this.state.movies.map((data: any) => {
-                            return (
-                                <div>
-                                    < MovieListing key={data.media_id} data={data} />
+                <div className="watchlist-page">
+                    {this.state.movies.map((data: any) => {
+                        return (
+                            <div>
+                                <div className="share-btns">
+                                    <header>Share</header>
+                                    <TwitterShareButton url={"https://www.themoviedb.org/" + data.media_type + "/" + data.media_id} >
+                                        <TwitterIcon size={40} />
+                                    </TwitterShareButton>
+                                    <FacebookShareButton url={"https://www.themoviedb.org/" + data.media_type + "/" + data.media_id} >
+                                        <FacebookIcon size={40} />
+                                        <FacebookShareCount url={"https://www.themoviedb.org/" + data.media_type + "/" + data.media_id} />
+                                    </FacebookShareButton>
                                 </div>
 
-                            );
-                        })
-                    }
+                                < MovieListing key={data.media_id} data={data} />
+                            </div>
+
+                        );
+                    })}
                 </div>
             );
         } else {
