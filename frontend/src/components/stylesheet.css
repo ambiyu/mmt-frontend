@@ -134,7 +134,7 @@ body {
 }
 
 .watchlist-page {
-    margin-left: 250px;
+    margin-left: 15%;
 }
 
 .mv-listing {
@@ -168,10 +168,24 @@ body {
     margin-top: 40px;
 }
 
-.mv-listing .release-status {
+.mv-listing .list-release-status {
     position: absolute;
     margin-left: 180px;
     margin-top: 220px;
+}
+
+.mv-listing .list-release-date {
+    position: absolute;
+    margin-left: 180px;
+    margin-top: 200px;
+}
+
+.share-btns {
+    color: white;
+    text-align: center;
+    z-index: 5;
+    position: absolute;
+    margin-left: 55%;
 }
 
 .login {
@@ -340,12 +354,4 @@ body {
     padding-bottom: 20px;
     font-size: 23px;
     color: rgb(255, 255, 255);
-}
-
-.share-btns {
-    color: white;
-    text-align: center;
-    z-index: 5;
-    position: absolute;
-    margin-left: 1150px;
 }

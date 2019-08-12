@@ -6,11 +6,6 @@ interface IProps {
 }
 
 export default class MovieListing extends React.Component<IProps, {}> {
-
-    private movieStatus = () => {
-
-    }
-
     public render() {
         const data = this.props.data;
         return (
@@ -21,7 +16,8 @@ export default class MovieListing extends React.Component<IProps, {}> {
 
                 <a href={"https://www.themoviedb.org/" + data.media_type + "/" + data.media_id}><header>{data.title} ({data.release_year})</header></a>
 
-                <h3 className="release-status">Release Date: {data.release_date} Status: {data.status}</h3>
+                <h3 className="list-release-date">Release Date: {data.release_date}</h3>
+                <h3 className="list-release-status">Status: {data.status}</h3>
 
                 <div className="poster">
                     <a href={"https://www.themoviedb.org/" + data.media_type + "/" + data.media_id}>
