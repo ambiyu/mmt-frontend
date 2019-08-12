@@ -42,15 +42,23 @@ export default class Favourites extends React.Component<IProps, IState> {
         if (!this.state.loading && this.state.movies !== null) {
             return (
                 <div>
-                    {this.state.movies.map((data: any) =>
-                        <MovieListing key={data.media_id} data={data} />
-                    )}
+
+                    {
+                        this.state.movies.map((data: any) => {
+                            return (
+                                <div>
+                                    < MovieListing key={data.media_id} data={data} />
+                                </div>
+
+                            );
+                        })
+                    }
                 </div>
             );
         } else {
             return (
                 <div>
-                    <header className="loading">Loading...</header>
+                    <header className="loading" > Loading...</header>
                 </div>
             );
         }

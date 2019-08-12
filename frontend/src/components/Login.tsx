@@ -52,14 +52,12 @@ export default class Login extends React.Component<IProps, IState> {
                 alert(response.statusText)
             } else {
                 response.json().then((json: any) => {
-                    console.log(json.predictions[0])
-
                     this.setState({ predResult: json.predictions[0] })
                     if (this.state.predResult.probability > 0.7 && this.state.predResult.tagName !== "Negative") {
                         this.props.handleLogin(1, this.state.users[0].username);
                     } else {
-                        console.log(json.predictions[0].tagName)
-                        alert("Authentication failed. " + json.predictions[0].probability + "% matching.");
+                        console.log(json.predictions[0].probability + "% matching");
+                        alert("Authentication failed");
                     }
                 })
             }
@@ -106,9 +104,8 @@ export default class Login extends React.Component<IProps, IState> {
             ).then(response => {
                 if (response.ok) {
                     response.json().then((result: any) => {
-                        const users = [...this.state.users];
-                        var index = users.indexOf({ user_id: result.user_id, username: result.username });
-                        if (index !== -1) { users.splice(index, 1) }
+                        var users = [...this.state.users];
+                        users = users.filter((user) => { return user.user_id !== result.user_id; })
                         this.setState({ users });
                     })
                 }
@@ -116,7 +113,7 @@ export default class Login extends React.Component<IProps, IState> {
         }
     }
 
-    private displayUsers = (deleting: string) => {
+    private displayUsers = (del: string) => {
         if (this.state.users != null) {
             return (
                 <div className="user-list">
@@ -124,10 +121,10 @@ export default class Login extends React.Component<IProps, IState> {
                         <div className="user-wrap" key={user.user_id} >
                             <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
                             <div className="user" onClick={() => this.handleClick(user.user_id, user.username)} >
-                                <button className={"delete-user" + deleting} onClick={() => this.manageUsers(user.user_id, "", "delete")}><i className="material-icons">cancel</i></button>
-                                <img className="avatar" src={"/avatars/" + (user.user_id % 5 + 1) + ".svg"} alt=""></img>
+                                <img src={"/avatars/" + (user.user_id % 5 + 1) + ".svg"} alt=""></img>
                                 <h2>{user.username}</h2>
                             </div>
+                            <button className={"del-btn" + del} onClick={() => this.manageUsers(user.user_id, "", "delete")}><i className="material-icons">cancel</i></button>
                         </div>
                     )}
                 </div>
@@ -175,8 +172,8 @@ export default class Login extends React.Component<IProps, IState> {
                         <button className="login-done" onClick={() => this.setState({ managing: false })}>Done</button>
                         <div className="add-user">
                             <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-                            <form className="search-bar" onSubmit={this.handleSubmit}>
-                                <input type="text" name="search" className="search-text" placeholder="Enter username" />
+                            <form className="input-bar" onSubmit={this.handleSubmit}>
+                                <input type="text" name="search" className="text-field" placeholder="Add user" />
                                 <button type="submit" className="add-button" >
                                     <i className="material-icons">add</i>
                                 </button>

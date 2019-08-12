@@ -181,27 +181,6 @@ body {
     position: absolute;
 }
 
-.user-list {
-    position: relative;
-    margin-top: 200px;
-}
-
-.user {
-    z-index: 3px;
-    border-radius: 20%;
-    width: 220px;
-    height: 270px;
-    background-color: rgba(255, 255, 255, 0.4);
-}
-
-.user img {
-    z-index: 3px;
-    margin-top: 20px;
-    margin-left: 20px;
-    width: 180px;
-    height: 180px;
-}
-
 .user-wrap {
     justify-content: center;
     padding: 30px;
@@ -210,41 +189,88 @@ body {
 
 .user-wrap :hover {
     background-color: #00A0EC;
+}
+
+.user-list {
+    position: relative;
+    margin-top: 180px;
+}
+
+.user {
+    z-index: 3px;
+    border-radius: 25%;
+    width: 180px;
+    height: 220px;
+    background-color: rgba(255, 255, 255, 0.4);
     cursor: pointer;
+}
+
+.user img {
+    z-index: 3px;
+    margin-top: 20px;
+    margin-left: 20px;
+    width: 140px;
+    height: 140px;
 }
 
 .user h2 {
     margin-top: 10px;
     text-align: center;
     position: relative;
-    background-color: transparent;
+    background: transparent !important;
 }
 
-.user .delete-user {
+.del-btn, .del-btn-del {
     position: absolute;
-    opacity: 0;
-}
-
-.user .delete-user-del {
-    position: absolute;
-    z-index: 5;
-    opacity: 1;
-}
-
-.user button {
-    background: transparent;
-    border: 2px solid rgb(138, 138, 138);
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+    background: white !important;
+    border: 2px solid rgb(0, 0, 0);
+    width: 40px;
+    height: 40px;
     color: red;
-    margin-left: 80px;
-    margin-top: 100px;
+    margin-left: 70px;
+    margin-top: 0px;
+    border-radius: 50%;
+    cursor: pointer;
 }
 
-.user .material-icons {
-    font-size: 50px;
-    border-radius: 50%;
+.del-btn {
+    display: none;
+}
+
+.user-wrap .material-icons {
+    font-size: 40px;
+    margin-left: -8px;
+    margin-top: -3px;
+    background: transparent !important;
+}
+
+.add-user {
+    margin-top: 10px;
+    position: relative;
+    display: flex;
+}
+
+.text-field {
+    border: 3px solid #00A0EC;
+    border-right: none;
+    padding: 5px;
+    height: 20px;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    color: rgb(0, 0, 0);
+}
+
+.add-button {
+    width: 40px;
+    height: 36px;
+    border: 1px solid #00A0EC;
+    background: #00A0EC;
+    text-align: center;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 20px;
+    float: right;
 }
 
 .webcam {
@@ -258,7 +284,7 @@ body {
 
 .login-btns {
     position: absolute;
-    margin-top: 250px;
+    margin-top: 300px;
     margin-left: 45%;
     text-align: center;
     font-size: 16px;
@@ -280,7 +306,7 @@ body {
     box-sizing: border-box;
     color: white;
     background-color: transparent;
-    transition: all 0.15s;
+    transition: all 0.25s;
 }
 
 .back-button:hover, .login-button:hover, .login-manage:hover, .login-done:hover {
