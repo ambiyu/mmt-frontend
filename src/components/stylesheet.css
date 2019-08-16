@@ -150,6 +150,7 @@ body {
 
 @media (max-width: 767px) {
     .homepage {
+        margin-top: 0px;
         margin-left: 10%;
         margin-right: 10%;
     }
@@ -212,6 +213,13 @@ body {
     z-index: 5;
     position: absolute;
     margin-left: 55%;
+}
+
+@media (max-width: 767px) {
+    .mv-listing {
+        margin-top: 0px;
+        margin-left: 0px;
+    }
 }
 
 .login {
@@ -362,8 +370,6 @@ body {
     color: white;
 }
 
-.card-list-wrap {}
-
 .card-list {
     display: grid;
     margin-left: 230px;
@@ -376,6 +382,7 @@ body {
 }
 
 .search-header, .fav-header {
+    position: absolute;
     margin-top: 80px;
     margin-left: 230px;
     padding-bottom: 20px;
@@ -391,5 +398,8 @@ body {
     }
     .fav-header, .search-header {
         margin-left: 5%;
+    }
+    .fav-page, .search-page {
+        margin-top: 0px;
     }
 }
