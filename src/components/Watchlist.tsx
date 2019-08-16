@@ -53,7 +53,9 @@ export default class Watchlist extends React.Component<IProps, IState> {
                                     </TwitterShareButton>
                                     <FacebookShareButton url={"https://www.themoviedb.org/" + data.media_type + "/" + data.media_id} >
                                         <FacebookIcon size={40} />
-                                        <FacebookShareCount url={"https://www.themoviedb.org/" + data.media_type + "/" + data.media_id} />
+                                        <div className="share-count">
+                                            <FacebookShareCount url={"https://www.themoviedb.org/" + data.media_type + "/" + data.media_id} />
+                                        </div>
                                     </FacebookShareButton>
                                 </div>
 

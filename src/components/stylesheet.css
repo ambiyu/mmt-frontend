@@ -150,7 +150,7 @@ body {
 
 @media (max-width: 767px) {
     .homepage {
-        margin-top: 0px;
+        margin-top: 70px;
         margin-left: 10%;
         margin-right: 10%;
     }
@@ -161,14 +161,14 @@ body {
 }
 
 .watchlist-page {
-    margin-left: 15%;
+    margin-top: 100px;
 }
 
 .mv-listing {
-    height: 200px;
+    margin-left: 550px;
+    padding-bottom: 50px;
+    height: 240px;
     position: relative;
-    margin-top: 100px;
-    margin-left: 250px;
     color: white;
 }
 
@@ -212,13 +212,59 @@ body {
     text-align: center;
     z-index: 5;
     position: absolute;
-    margin-left: 55%;
+    margin-left: 70%;
 }
 
 @media (max-width: 767px) {
+    .watchlist-page {
+        margin-top: 80px;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
     .mv-listing {
         margin-top: 0px;
         margin-left: 0px;
+        height: 200px;
+        padding-bottom: 30px;
+    }
+    .mv-listing img {
+        width: 100px;
+        height: 150px;
+    }
+    .mv-listing header {
+        font-size: 16px;
+        margin-left: 120px;
+        margin-top: -5px;
+    }
+    .mv-listing .overview {
+        margin-left: 120px;
+        margin-top: 20px;
+        height: 130px;
+        width: 200px;
+        font-size: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .mv-listing .list-release-date {
+        font-size: 14px;
+        margin-left: 0px;
+        margin-top: 155px;
+    }
+    .mv-listing .list-release-status {
+        font-size: 14px;
+        margin-left: 0px;
+        margin-top: 175px;
+    }
+    .share-btns {
+        margin-left: 240px;
+        margin-top: 155px;
+        display: flex;
+    }
+    .share-btns header {
+        display: none;
+    }
+    .share-count {
+        display: none;
     }
 }
 
@@ -378,11 +424,10 @@ body {
 }
 
 .fav-page, .search-page {
-    margin-top: 30px;
+    margin-top: 70px;
 }
 
 .search-header, .fav-header {
-    position: absolute;
     margin-top: 80px;
     margin-left: 230px;
     padding-bottom: 20px;
@@ -398,8 +443,5 @@ body {
     }
     .fav-header, .search-header {
         margin-left: 5%;
-    }
-    .fav-page, .search-page {
-        margin-top: 0px;
     }
 }
