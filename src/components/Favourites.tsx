@@ -24,7 +24,7 @@ export default class Favourites extends React.Component<IProps, IState> {
 
     public componentDidMount = () => {
         if (this.state.loading) {
-            fetch("http://mmtapi.azurewebsites.net/api/Media/GetFavourites/" + this.props.user_id, {
+            fetch("https://mmtapi.azurewebsites.net/api/Media/GetFavourites/" + this.props.user_id, {
                 method: "GET"
             }).then((result: any) => {
                 result.json().then((movies: any) => {

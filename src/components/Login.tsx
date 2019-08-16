@@ -26,15 +26,11 @@ export default class Login extends React.Component<IProps, IState> {
         };
     }
 
-    private getAvatar = (user: any) => {
-        return "/avatars/" + (user.user_id % 5 + 1) + ".svg";
-    }
-
     private authenticate = () => {
         const screenshot = this.state.refCamera.current.getScreenshot();
 
         const apiKey = "4b82ef1a5a7f4c2a9c23380768522746";
-        const apiEndpoint = "https://australiaeast.api.cognitive.microsoft.com/customvision/v3.0/Prediction/024de653-0188-4e51-b8eb-03a9c5a202ef/classify/iterations/Iteration3/image";
+        const apiEndpoint = "https://australiaeast.api.cognitive.microsoft.com/customvision/v3.0/Prediction/024de653-0188-4e51-b8eb-03a9c5a202ef/classify/iterations/Iteration5/image";
         const base64 = require('base64-js');
         const base64content = screenshot.split(";")[1].split(",")[1]
         const byteArray = base64.toByteArray(base64content);
@@ -53,10 +49,10 @@ export default class Login extends React.Component<IProps, IState> {
             } else {
                 response.json().then((json: any) => {
                     this.setState({ predResult: json.predictions[0] })
+                    console.log(json.predictions[0].probability + "% matching");
                     if (this.state.predResult.probability > 0.7 && this.state.predResult.tagName !== "Negative") {
                         this.props.handleLogin(1, this.state.users[0].username);
                     } else {
-                        console.log(json.predictions[0].probability + "% matching");
                         alert("Authentication failed");
                     }
                 })
