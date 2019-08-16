@@ -88,7 +88,7 @@ body {
     font-size: 15px;
 }
 
-@media (max-width: 767px) {
+@media only screen and (max-width: 767px) {
     .card-title :not(img) {
         padding-top: 40px;
         width: 150px;
@@ -148,7 +148,7 @@ body {
     background-color: #00A0EC;
 }
 
-@media (max-width: 767px) {
+@media only screen and (max-width: 767px) {
     .homepage {
         padding-top: 70px;
         margin-top: 0px;
@@ -190,7 +190,7 @@ body {
 .mv-listing .overview {
     position: absolute;
     display: inline-block;
-    width: 40%;
+    width: 550px;
     height: 170px;
     margin-left: 180px;
     margin-top: 40px;
@@ -213,10 +213,10 @@ body {
     text-align: center;
     z-index: 5;
     position: absolute;
-    margin-left: 70%;
+    margin-left: 1300px;
 }
 
-@media (max-width: 767px) {
+@media only screen and (max-width: 767px) {
     .watchlist-page {
         padding-top: 80px;
         margin-top: 0px;
@@ -384,7 +384,7 @@ body {
 
 .login-btns {
     position: absolute;
-    margin-top: 300px;
+    margin-top: 150px;
     margin-left: 45%;
     text-align: center;
     font-size: 16px;
@@ -414,7 +414,7 @@ body {
     border-color: #00A0EC;
 }
 
-@media (max-width: 767px) {
+@media only screen and (max-width: 767px) {
     .user-list {
         margin-left: 65px;
     }
@@ -432,30 +432,31 @@ body {
 .card-list {
     display: grid;
     grid-gap: 30px;
-    grid-template-columns: repeat(7, 200px);
+    grid-template-columns: repeat(auto-fit, 200px);
 }
 
 .fav-page, .search-page {
+    margin-left: 230px;
     margin-top: 70px;
 }
 
 .search-header, .fav-header {
     margin-top: 80px;
-    margin-left: 230px;
     padding-bottom: 20px;
     font-size: 23px;
     color: rgb(255, 255, 255);
 }
 
-@media (max-width: 767px) {
+@media only screen and (max-width: 767px) {
     .card-list {
         margin-left: 5%;
-        grid-template-columns: repeat(2, 150px);
+        grid-template-columns: repeat(auto-fit, 150px);
     }
     .fav-header, .search-header {
         margin-left: 5%;
     }
     .fav-page, .search-page {
+        margin-left: 0px;
         margin-top: 0px;
         padding-top: 1px;
     }
