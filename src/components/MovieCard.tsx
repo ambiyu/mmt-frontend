@@ -68,7 +68,7 @@ export default class Movie extends React.Component<IProps, {}> {
                 </div>
 
                 <div className="card-poster">
-                    <a href={"https://www.themoviedb.org/" + this.props.media_type + "/" + this.props.data.media_id}>
+                    <a href={"https://www.themoviedb.org/" + this.props.media_type + "/" + this.props.data.media_id} target="_blank" >
                         <img src={"https://image.tmdb.org/t/p/w500" + this.props.data.poster_path} alt={this.getTitle()} />
                     </a>
                 </div>

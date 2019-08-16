@@ -150,7 +150,8 @@ body {
 
 @media (max-width: 767px) {
     .homepage {
-        margin-top: 70px;
+        padding-top: 70px;
+        margin-top: 0px;
         margin-left: 10%;
         margin-right: 10%;
     }
@@ -410,6 +411,17 @@ body {
 .back-button:hover, .login-button:hover, .login-manage:hover, .login-done:hover {
     background: #00A0EC;
     border-color: #00A0EC;
+}
+
+@media (max-width: 767px) {
+    .user-list {
+        margin-left: 65px;
+    }
+    .login-btns {
+        margin-top: 0px;
+        margin-left: 100px;
+        padding-bottom: 20px;
+    }
 }
 
 .loading {
