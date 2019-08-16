@@ -6,11 +6,27 @@ interface IProps {
 }
 
 export default class Navbar extends React.Component<IProps, {}> {
+    private toggleSidebar = () => {
+        var nav = document.getElementById("navbar");
+        var search = document.getElementById("search-bar");
+        if (nav != null && search != null) {
+            nav.classList.toggle("active");
+            search.classList.toggle("active");
+        }
+    }
+
     public render() {
         return (
             <div className="nav-wrapper">
                 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-                <div className="navbar">
+
+                <div className="nav-toggle-btn">
+                    <button onClick={this.toggleSidebar} >
+                        <i className="material-icons">dehaze</i>
+                    </button>
+                </div>
+
+                <div id="navbar" className="navbar">
                     <div className="nav-home">
                         <a id="nav-home" onClick={() => this.props.handlePageChange("home")} ><i className="material-icons">home</i>Home</a>
                     </div>

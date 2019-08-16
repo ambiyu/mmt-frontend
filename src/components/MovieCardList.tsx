@@ -46,11 +46,14 @@ export default class MovieCardList extends React.Component<IProps, {}> {
             );
         } else {
             return (
-                <div className="card-list">
-                    {this.props.data.map((movie: any) =>
-                        <MovieCard key={movie.media_id} data={movie} setFavourite={this.props.setFavourite} media_type={movie.media_type} />
-                    )}
+                <div className="card-list-wrap">
+                    <div className="card-list">
+                        {this.props.data.map((movie: any) =>
+                            <MovieCard key={movie.media_id} data={movie} setFavourite={this.props.setFavourite} media_type={movie.media_type} />
+                        )}
+                    </div>
                 </div>
+
             );
         }
 
