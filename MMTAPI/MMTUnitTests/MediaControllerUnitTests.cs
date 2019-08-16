@@ -24,7 +24,7 @@ namespace MMTUnitTests
             {
                 MediaId = 1399,
                 MediaType = "tv",
-                Title = "Ayylmao",
+                Title = "Yes",
                 PosterPath = "/a23132dsadsa",
                 ReleaseDate = "2000-12-23",
                 ReleaseYear = "2000",
@@ -67,11 +67,14 @@ namespace MMTUnitTests
         public async Task TestGetAll() {
             using (var context = new MyMovieTrackerContext(options)) {
                 MediaController mediaController = new MediaController(context);
+
                 ActionResult<IEnumerable<Media>> result = await mediaController.GetMedia();
+
                 Assert.AreEqual(media[0].Title, result.Value.First().Title);
                 Assert.AreEqual(media[1].Title, result.Value.Last().Title);
             }
         }
+
         /*
         [TestMethod]
         public async Task TestGetFavourites() {
@@ -98,14 +101,17 @@ namespace MMTUnitTests
         */
 
         [TestMethod]
-        public async Task TestGet() {
+        public async Task TestGetSuccessful() {
             using (var context = new MyMovieTrackerContext(options)) {
                 MediaController mediaController = new MediaController(context);
+
                 ActionResult<Media> result = await mediaController.GetMedia("tv", 1399);
+
                 Assert.IsNotNull(result.Value);
                 Assert.AreEqual(media[0].Title, result.Value.Title);
                 
                 result = await mediaController.GetMedia("movie", 299534);
+
                 Assert.IsNotNull(result.Value);
                 Assert.AreEqual(media[1].Title, result.Value.Title);
             }
@@ -115,13 +121,16 @@ namespace MMTUnitTests
         public async Task TestGetOnInvalidMedia() {
             using (var context = new MyMovieTrackerContext(options)) {
                 MediaController mediaController = new MediaController(context);
+
                 ActionResult<Media> result = await mediaController.GetMedia("tv", 123);
+
                 Assert.IsNull(result.Value);
+                Assert.IsInstanceOfType(result.Result, typeof(NotFoundResult));
             }
         }
 
         [TestMethod]
-        public async Task TestPost() {
+        public async Task TestSuccessfulPost() {
             using (var context = new MyMovieTrackerContext(options)) {
                 MediaController mediaController = new MediaController(context);
                 MediaController.MediaDTO dto = new MediaController.MediaDTO() {
@@ -130,8 +139,57 @@ namespace MMTUnitTests
                 };
 
                 ActionResult<Media> result = await mediaController.PostMedia(dto);
-                Assert.IsNull(result.Value);
-                //Assert.AreEqual("Venom", result.Value.Title);
+
+                Assert.IsNotNull(result);
+                Assert.IsNotNull(result.Result);
+                Assert.IsInstanceOfType(result.Result, typeof(CreatedAtActionResult));
+            }
+        }
+
+        [TestMethod]
+        public async Task TestPostConflict() {
+            using (var context = new MyMovieTrackerContext(options)) {
+                MediaController mediaController = new MediaController(context);
+
+                MediaController.MediaDTO dto = new MediaController.MediaDTO() {
+                    media_id = 1399,
+                    media_type = "tv"
+                };
+
+                try {
+                    ActionResult<Media> result = await mediaController.PostMedia(dto);
+                    Assert.Fail();
+                } catch (ArgumentException e) {
+                    Console.WriteLine(e.Message);
+                }
+            }
+        }
+
+        [TestMethod]
+        public async Task TestDelete() {
+            using (var context = new MyMovieTrackerContext(options)) {
+                MediaController mediaController = new MediaController(context);
+
+                ActionResult<Media> result = await mediaController.DeleteMedia("movie", 299534);
+
+                Assert.IsNotNull(result);
+                Assert.IsNotNull(result.Value);
+                Assert.AreEqual(media[1].Title, result.Value.Title);
+                Assert.AreEqual(media[1].MediaId, result.Value.MediaId);
+                Assert.AreEqual(media[1].MediaType, result.Value.MediaType);
+            }
+        }
+
+        [TestMethod]
+        public async Task TestDeleteNotFound() {
+            using (var context = new MyMovieTrackerContext(options)) {
+                MediaController mediaController = new MediaController(context);
+
+                ActionResult<Media> result = await mediaController.DeleteMedia("tv", 123);
+
+                Assert.IsNotNull(result);
+                Assert.IsNotNull(result.Result);
+                Assert.IsInstanceOfType(result.Result, typeof(NotFoundResult));
             }
         }
     }

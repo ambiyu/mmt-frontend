@@ -3,7 +3,7 @@ import "./stylesheet.css";
 import MovieCard from "./MovieCard";
 
 interface IProps {
-    setFavourite(data: any, type: string, operation: string): any;
+    setFavourite(data: any, type: string): any;
     data: any;
     media_type: any;
     user_id: number;

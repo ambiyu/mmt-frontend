@@ -9,7 +9,7 @@ interface IState {
 }
 
 interface IProps {
-    setFavourite(data: any, type: string, operation: string): any;
+    setFavourite(data: any, type: string): any;
     user_id: number;
 }
 

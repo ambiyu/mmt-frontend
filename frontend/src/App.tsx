@@ -118,7 +118,7 @@ class App extends React.Component<{}, IState>{
         })
     }
 
-    public setFavourite = (data: any, type: string, operation: string) => {
+    public setFavourite = (data: any, type: string) => {
         if (!this.movieExistsInDb(data.media_id, data.media_type)) {
             this.addMovieToDb(data);
             this.alterFavourites(data, type);

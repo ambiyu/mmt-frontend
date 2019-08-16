@@ -3,7 +3,7 @@ import "./stylesheet.css"
 import MovieCardList from "./MovieCardList";
 
 interface IProps {
-    setFavourite(data: any, type: string, operation: string): any;
+    setFavourite(data: any, type: string): any;
     searchTerm: string;
     user_id: number;
 }

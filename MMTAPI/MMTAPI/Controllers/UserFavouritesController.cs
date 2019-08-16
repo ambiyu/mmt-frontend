@@ -62,6 +62,7 @@ namespace MMTAPI.Controllers
                 }
             }
 
+            //return Ok(userFavourites);
             return CreatedAtAction("GetUserFavourites", new { user_id = userFavourites.UserId, media_type = userFavourites.MediaType, media_id = userFavourites.MediaId }, userFavourites);
         }
 

@@ -2,7 +2,7 @@ import * as React from "react";
 import MovieCardList from "./MovieCardList";
 
 interface IProps {
-    setFavourite(data: any, type: string, operation: string): any;
+    setFavourite(data: any, type: string): any;
     user_id: number;
 }
 

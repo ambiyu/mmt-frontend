@@ -2,7 +2,7 @@ import * as React from "react";
 import "./stylesheet.css";
 
 interface IProps {
-    setFavourite(data: any, type: string, operation: string): any;
+    setFavourite(data: any, type: string): any;
     media_type: string;
     data: any;
 }
@@ -41,11 +41,8 @@ export default class Movie extends React.Component<IProps, {}> {
                 media_type: this.props.media_type,
                 status: data.status
             }
-            if (elem.classList.contains("active")) { // should update
-                this.props.setFavourite(movieData, type, "POST");
-            } else {
-                this.props.setFavourite(movieData, type, "DELETE");
-            }
+
+            this.props.setFavourite(movieData, type);
         }
     }
 
