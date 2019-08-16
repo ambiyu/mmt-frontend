@@ -54,17 +54,6 @@ class App extends React.Component<{}, IState>{
         }
     }
 
-    public movieExistsInDb = (id: number, media_type: string) => {
-        fetch("https://mmtapi.azurewebsites.net/api/Media/GetByIdAndType/" + media_type + "/" + id, {
-            method: "GET"
-        }).then(result => {
-            if (result.ok) {
-                return true;
-            }
-        });
-        return false;
-    }
-
     private alterFavourites = (data: any, type: string) => {
         const body = {
             "user_id": this.state.user_id,
@@ -119,12 +108,8 @@ class App extends React.Component<{}, IState>{
     }
 
     public setFavourite = (data: any, type: string) => {
-        if (!this.movieExistsInDb(data.media_id, data.media_type)) {
-            this.addMovieToDb(data);
-            this.alterFavourites(data, type);
-        } else {
-            this.alterFavourites(data, type);
-        }
+        this.addMovieToDb(data);
+        this.alterFavourites(data, type);
     }
 
     public render() {

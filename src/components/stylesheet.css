@@ -218,7 +218,8 @@ body {
 
 @media (max-width: 767px) {
     .watchlist-page {
-        margin-top: 80px;
+        padding-top: 80px;
+        margin-top: 0px;
         margin-left: 5%;
         margin-right: 5%;
     }
@@ -234,14 +235,14 @@ body {
     }
     .mv-listing header {
         font-size: 16px;
-        margin-left: 120px;
+        margin-left: 115px;
         margin-top: -5px;
     }
     .mv-listing .overview {
-        margin-left: 120px;
-        margin-top: 20px;
+        margin-left: 115px;
+        margin-top: 25px;
         height: 130px;
-        width: 200px;
+        width: 210px;
         font-size: 10px;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -418,7 +419,7 @@ body {
         margin-left: 65px;
     }
     .login-btns {
-        margin-top: 0px;
+        margin-top: 30px;
         margin-left: 100px;
         padding-bottom: 20px;
     }
@@ -430,7 +431,6 @@ body {
 
 .card-list {
     display: grid;
-    margin-left: 230px;
     grid-gap: 30px;
     grid-template-columns: repeat(7, 200px);
 }
@@ -450,10 +450,13 @@ body {
 @media (max-width: 767px) {
     .card-list {
         margin-left: 5%;
-        grid-gap: 30px;
         grid-template-columns: repeat(2, 150px);
     }
     .fav-header, .search-header {
         margin-left: 5%;
+    }
+    .fav-page, .search-page {
+        margin-top: 0px;
+        padding-top: 1px;
     }
 }
